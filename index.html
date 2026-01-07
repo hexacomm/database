@@ -3,419 +3,1210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Data Hexacomm</title>
+    <title>Manajemen Data Hexacomm (Paper, Materi, Anggota, Alumni)</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Custom Styles */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f7f9fb;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
-        /* Navigasi */
+        .container {
+            max-width: 1400px;
+        }
+
+        /* --- Gaya Navigasi --- */
         .nav-item {
             display: flex;
             align-items: center;
-            padding: 0.75rem 1rem;
-            background-color: #F0E68C;
-            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            background-color: #F0E68C; /* Khaki (Kuning Muda) */
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-bottom: 0.5rem;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            margin-left: -1rem;
+            margin-right: -1rem;
+            width: calc(100% + 2rem);
         }
 
         .nav-item-inactive:hover {
             background-color: #FFEB3B;
-            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-text {
+            font-weight: bold;
+            color: #4B5563;
+            font-size: 1rem;
+            margin-left: 0.75rem;
+        }
+
+        .nav-item-inactive:hover .nav-text {
+            color: #2C3E50;
         }
 
         .nav-item-active {
             background-color: #FFD700;
             color: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             font-weight: bold;
         }
 
-        .nav-text {
-            font-weight: 600;
-            margin-left: 0.75rem;
+        .nav-item-active .nav-text {
+            font-weight: bold;
+            color: white;
+        }
+        .nav-item-active i {
+            color: white; 
+        }
+        .nav-item-inactive i {
+            color: #D6A238;
+            transition: color 0.3s;
+        }
+        .nav-item-inactive:hover i {
+            color: #B8860B;
         }
 
+        #mainNav {
+            margin-top: 20px;
+        }
+        
+        /* --- Gaya Aplikasi --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        #visual-side {
+            background: linear-gradient(135deg, #fffcf5, #ffffff);
+            color: #4b5563;
+        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin-fast { animation: spin 0.5s linear infinite; }
+        .sortable-header { transition: background-color 0.2s ease-in-out; }
+        .sort-icon-wrapper i { transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out; }
         .main-page-header {
-            @apply bg-white p-6 rounded-2xl shadow-sm border-l-8 border-yellow-500 mb-6;
+            @apply bg-white p-5 rounded-xl shadow-lg border-l-8 border-yellow-500 mb-4;
         }
-
         .view-background-texture {
-            background-color: #ffffff;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            background-color: #fefefe;
+            background-image: repeating-linear-gradient(
+                45deg, 
+                #fcfcfc, 
+                #fcfcfc 15px, 
+                #f9f9f9 15px, 
+                #f9f9f9 30px
+            );
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.03);
         }
-
-        /* Modal */
+        #loginSection {
+            min-height: 100vh;
+            padding: 0; 
+        }
+        #loginSection > div {
+             margin-top: 2rem;
+             margin-bottom: 2rem;
+        }
+        
+        /* Gaya untuk Modal (Edit) */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 100;
-            backdrop-filter: blur(4px);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
         }
 
         .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            width: 90%;
-            max-width: 800px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            width: 95%;
+            max-width: 700px;
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
         }
 
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .animate-spin-fast { animation: spin 0.6s linear infinite; }
+        .cv-link-cell {
+            @apply flex items-center justify-center space-x-1;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .cv-link-cell a {
+            @apply p-1.5 rounded-full text-base; 
+            transition: background-color 0.2s;
+        }
+        .cv-link-cell .cv-available {
+            @apply bg-green-100 text-green-700 hover:bg-green-200;
+        }
+        .cv-link-cell .cv-missing {
+             @apply text-gray-400;
+        }
+
+        .contact-entry {
+            @apply flex items-center space-x-1 text-xs px-2 py-1 bg-blue-50 text-blue-800 rounded-lg;
+            margin-bottom: 2px;
+        }
+        .contact-entry a {
+             color: inherit;
+        }
     </style>
 </head>
-<body class="flex flex-col">
+<body class="min-h-screen flex flex-col">
 
-    <!-- LOGIN SECTION -->
-    <div id="loginSection" class="min-h-screen flex items-center justify-center p-4">
-        <div class="w-full max-w-4xl flex flex-col md:flex-row rounded-3xl shadow-2xl overflow-hidden bg-white">
-            <div class="md:w-1/2 bg-yellow-50 p-12 flex flex-col justify-center items-center text-center">
-                <img id="loginLogo" src="https://raw.githubusercontent.com/fitrasadli/pantaupaper/main/Logo%20Hexacomm.png" 
-                     class="w-32 mb-6" alt="Logo" onerror="this.src='https://placehold.co/150?text=Hexa'">
-                <h2 class="text-3xl font-extrabold text-yellow-800">Hexacomm RnD</h2>
-                <p class="text-gray-600 mt-2">Sistem Manajemen Data Terpadu</p>
+    <!-- BAGIAN 1: LOGIN SECTION -->
+    <div id="loginSection" class="flex-grow flex items-center justify-center">
+        <div class="w-full max-w-sm md:max-w-4xl lg:max-w-5xl flex rounded-2xl shadow-2xl overflow-hidden mx-4 text-center md:text-left">
+            
+            <!-- Left Side: Visual/Logo -->
+            <div id="visual-side" class="hidden md:block md:w-1/2 p-12 relative flex flex-col justify-center items-center">
+                <div class="text-center">
+                    <img id="loginLogo" 
+                        class="max-w-[150px] h-auto mx-auto mb-4 p-3 rounded-xl shadow-lg object-contain border border-yellow-100" 
+                        src="https://raw.githubusercontent.com/fitrasadli/pantaupaper/main/Logo%20Hexacomm.png" 
+                        alt="Logo Hexacomm.png"
+                        onerror="this.onerror=null; this.src='https://placehold.co/150x150/fde047/78350f?text=Hexa';">
+
+                    <h2 class="text-3xl font-extrabold mb-2 text-yellow-700">Paper Riset Hexacomm</h2>
+                    <p class="mt-4 leading-relaxed text-gray-600">
+                        Website pemantau paper kalian.
+                    </p>
+                    <div class="mt-8">
+                        <span class="text-sm font-semibold border-b-2 border-yellow-700 text-yellow-800">#HexaRnd</span>
+                    </div>
+                </div>
             </div>
-            <div class="md:w-1/2 p-10">
-                <h1 class="text-2xl font-bold text-gray-800 mb-6">Silakan Masuk</h1>
-                <form id="loginForm" class="space-y-4">
+
+            <!-- Right Side: Login Form -->
+            <div class="w-full md:w-1/2 bg-white p-8 md:p-10 lg:p-12">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-800">Masukkan ID Anda</h1>
+                    <p class="text-gray-500 text-sm mt-2">Belum ada? tanya RnD</p>
+                </div>
+
+                <form id="loginForm" class="space-y-6">
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Username</label>
-                        <input type="text" id="username" required class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none">
+                        <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="username">Username</label>
+                        <input type="text" id="username" placeholder="Masukkan username" required
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Password</label>
-                        <input type="password" id="password" required class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none">
+                        <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="password">Password</label>
+                        <input type="password" id="password" placeholder="Masukkan password" required
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
                     </div>
-                    <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-xl transition shadow-lg">Masuk</button>
-                    <p id="loginError" class="text-red-500 text-sm text-center hidden"></p>
+                    
+                    <button type="submit" 
+                        class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-lg transition duration-300 shadow-lg disabled:opacity-50">
+                        Masuk
+                    </button>
                 </form>
+                <p id="loginError" class="text-red-500 text-center mt-6 text-sm hidden"></p>
             </div>
         </div>
     </div>
 
-    <!-- MAIN APP SECTION -->
-    <div id="appSection" class="hidden flex-grow flex flex-col lg:flex-row p-4 lg:p-8 gap-8">
-        
-        <!-- SIDEBAR -->
-        <aside class="w-full lg:w-72 bg-white p-6 rounded-2xl shadow-md h-fit">
-            <div class="flex items-center gap-3 mb-8 border-b pb-4">
-                <img src="https://raw.githubusercontent.com/fitrasadli/pantaupaper/main/Logo%20Hexacomm.png" class="w-10 h-10 object-contain" alt="H">
-                <span class="text-xl font-bold text-yellow-700">Hexa Portal</span>
-            </div>
-            <nav id="mainNav">
-                <div class="nav-item nav-item-active" data-view="paper"><i data-lucide="file-text"></i><span class="nav-text">Paper</span></div>
-                <div class="nav-item nav-item-inactive" data-view="materi"><i data-lucide="folder-tree"></i><span class="nav-text">Materi</span></div>
-                <div class="nav-item nav-item-inactive" data-view="anggota"><i data-lucide="users"></i><span class="nav-text">Anggota</span></div>
-                <div class="nav-item nav-item-inactive" data-view="alumni"><i data-lucide="graduation-cap"></i><span class="nav-text">Alumni</span></div>
-            </nav>
-            <button id="logoutButton" class="w-full mt-8 bg-red-50 hover:bg-red-100 text-red-600 font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition">
-                <i data-lucide="log-out" class="w-4 h-4"></i> Keluar
-            </button>
-        </aside>
-
-        <!-- CONTENT AREA -->
-        <main class="flex-grow">
-            <!-- PAPER VIEW -->
-            <div id="paperView" class="view-content">
-                <div class="main-page-header">
-                    <h1 class="text-2xl font-bold text-gray-800">Manajemen Paper</h1>
-                </div>
-                <div class="admin-only bg-white p-6 rounded-2xl shadow-sm mb-6 hidden">
-                    <h2 class="font-bold text-yellow-700 mb-4">Tambah Paper</h2>
-                    <form id="paperForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <input type="text" id="p_title" placeholder="Judul Paper" class="p-3 border rounded-lg col-span-2" required>
-                        <input type="text" id="p_authors" placeholder="Penulis" class="p-3 border rounded-lg">
-                        <select id="p_status" class="p-3 border rounded-lg">
-                            <option value="Draft">Draft</option>
-                            <option value="Submitted">Submitted</option>
-                            <option value="Accepted">Accepted</option>
-                        </select>
-                        <input type="text" id="p_cat" placeholder="Kategori" class="p-3 border rounded-lg">
-                        <button type="submit" class="bg-yellow-600 text-white p-3 rounded-lg font-bold">Simpan</button>
-                    </form>
-                </div>
-                <div class="view-background-texture">
-                    <input type="text" id="s_paper" placeholder="Cari paper..." class="w-full p-3 border rounded-xl mb-4">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-50 border-b">
-                                <tr>
-                                    <th class="p-4">Judul</th>
-                                    <th class="p-4">Penulis</th>
-                                    <th class="p-4">Status</th>
-                                    <th class="p-4">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="paperList"></tbody>
-                        </table>
+    <!-- BAGIAN 2: APLIKASI UTAMA -->
+    <div id="appSection" class="hidden flex-grow flex p-4 md:p-8">
+        <div class="container mx-auto flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8">
+            
+            <!-- SIDEBAR NAVIGASI -->
+            <aside class="w-full lg:w-64 bg-white p-6 rounded-xl shadow-lg flex-shrink-0 relative">
+                <div class="flex flex-col mb-8 border-b pb-4">
+                    <div class="flex items-center text-xl font-bold text-gray-800 mb-4">
+                        <img id="headerLogo" 
+                            class="w-8 h-8 mr-2 object-contain rounded-md" 
+                            src="https://raw.githubusercontent.com/fitrasadli/pantaupaper/main/Logo%20Hexacomm.png" 
+                            alt="Logo"
+                            onerror="this.onerror=null; this.src='https://placehold.co/32x32/fde047/78350f?text=H';">
+                        <span class="text-yellow-600">Hexa RnD</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- MATERI VIEW -->
-            <div id="materiView" class="view-content hidden">
-                <div class="main-page-header"><h1 class="text-2xl font-bold">Manajemen Materi</h1></div>
-                <div class="admin-only bg-white p-6 rounded-2xl shadow-sm mb-6 hidden">
-                    <form id="materiForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <input type="text" id="m_judul" placeholder="Judul Materi" class="p-3 border rounded-lg col-span-2" required>
-                        <select id="m_divisi" class="p-3 border rounded-lg">
+                <nav id="mainNav" class="space-y-2">
+                    <div id="nav-paper" class="nav-item nav-item-active" data-view="paper">
+                        <i data-lucide="file-text" class="w-5 h-5 mr-3"></i>
+                        <span class="nav-text">Manajemen Paper</span>
+                    </div>
+                    <div id="nav-materi" class="nav-item nav-item-inactive" data-view="materi">
+                        <i data-lucide="folder-tree" class="w-5 h-5 mr-3"></i>
+                        <span class="nav-text">Manajemen Materi</span>
+                    </div>
+                    <div id="nav-anggota" class="nav-item nav-item-inactive" data-view="anggota">
+                        <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                        <span class="nav-text">Data Anggota</span>
+                    </div>
+                    <div id="nav-alumni" class="nav-item nav-item-inactive" data-view="alumni">
+                        <i data-lucide="graduation-cap" class="w-5 h-5 mr-3"></i>
+                        <span class="nav-text">Data Alumni</span>
+                    </div>
+                </nav>
+
+                <div class="mt-10 pt-10 border-t">
+                    <button id="logoutButton" class="w-full bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm font-semibold transition shadow flex items-center justify-center space-x-1">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </aside>
+            
+            <!-- KONTEN UTAMA -->
+            <main id="mainContent" class="flex-grow w-full">
+                
+                <!-- VIEW 1: MANAJEMEN PAPER -->
+                <div id="paperView" class="view-content hidden space-y-4">
+                    <div class="main-page-header">
+                        <h1 class="text-3xl font-bold text-gray-800 flex items-center p-0">
+                            <i data-lucide="file-text" class="w-8 h-8 mr-3 text-yellow-600"></i>
+                            Manajemen Paper
+                        </h1>
+                        <p class="text-sm text-gray-500 mt-1 pl-11">Kelola, tambah, dan pantau status paper riset.</p>
+                    </div>
+
+                    <div class="view-background-texture space-y-8 p-6">
+                        <!-- Form Tambah Paper -->
+                        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border-t-4 border-yellow-500">
+                            <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
+                                <i data-lucide="book-plus" class="w-6 h-6"></i>
+                                <span>Tambah Paper Baru</span>
+                            </h2>
+                            <form id="paperForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <input type="text" id="title" placeholder="Judul Paper (Wajib)" required
+                                    class="col-span-1 md:col-span-2 p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                                <input type="text" id="authors" placeholder="Nama Penulis (Pisahkan dengan koma)"
+                                    class="p-3 border border-gray-300 rounded-lg">
+                                <select id="status" required
+                                    class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                                    <option value="" disabled selected>Pilih Status</option>
+                                    <option value="Draft">Draft</option>
+                                    <option value="Submitted">Submitted</option>
+                                    <option value="Under Review">Under Review</option>
+                                    <option value="Accepted">Accepted</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                                <input type="text" id="category" placeholder="Kategori (Jurnal/Konferensi/Lainnya)"
+                                    class="p-3 border border-gray-300 rounded-lg">
+                                <input type="date" id="deadline" placeholder="Deadline"
+                                    class="p-3 border border-gray-300 rounded-lg">
+                                <input type="url" id="reference_link" placeholder="Link Referensi (URL)"
+                                    class="p-3 border border-gray-300 rounded-lg">
+                                <input type="url" id="overleaf_link" placeholder="Link Overleaf (URL)"
+                                    class="p-3 border border-gray-300 rounded-lg">
+                                <input type="url" id="ppt_link" placeholder="Link PPT/Slide (URL)"
+                                    class="p-3 border border-gray-300 rounded-lg">
+                                
+                                <button type="submit" id="submitPaperButton"
+                                    class="col-span-1 md:col-span-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-xl transition duration-300 shadow-xl shadow-yellow-400/50 hover:shadow-2xl hover:shadow-yellow-500/70 disabled:opacity-50 flex items-center justify-center space-x-2">
+                                </button>
+                                <p id="formPaperMessage" class="col-span-3 text-sm text-center hidden"></p>
+                            </form>
+                        </div>
+
+                        <!-- Daftar Paper -->
+                        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
+                            <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
+                                <i data-lucide="list-checks" class="w-6 h-6"></i>
+                                <span>Daftar Paper</span>
+                            </h2>
+                            <input type="text" id="searchPaper" placeholder="Cari berdasarkan Judul atau Penulis..."
+                                class="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th onclick="handleHeaderSortClick('title', 'paper')" data-sort-key="title" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">
+                                                <div class="flex items-center space-x-1"><span>Judul</span> <span class="sort-icon-wrapper paper" data-col="title"></span></div>
+                                            </th>
+                                            <th onclick="handleHeaderSortClick('authors', 'paper')" data-sort-key="authors" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">
+                                                <div class="flex items-center space-x-1"><span>Penulis</span> <span class="sort-icon-wrapper paper" data-col="authors"></span></div>
+                                            </th>
+                                            <th onclick="handleHeaderSortClick('status', 'paper')" data-sort-key="status" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">
+                                                <div class="flex items-center space-x-1"><span>Status</span> <span class="sort-icon-wrapper paper" data-col="status"></span></div>
+                                            </th>
+                                            <th onclick="handleHeaderSortClick('category', 'paper')" data-sort-key="category" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell cursor-pointer hover:bg-gray-100 sortable-header">
+                                                <div class="flex items-center space-x-1"><span>Kategori</span> <span class="sort-icon-wrapper paper" data-col="category"></span></div>
+                                            </th>
+                                            <th onclick="handleHeaderSortClick('deadline', 'paper')" data-sort-key="deadline" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell cursor-pointer hover:bg-gray-100 sortable-header">
+                                                <div class="flex items-center space-x-1"><span>Deadline</span> <span class="sort-icon-wrapper paper" data-col="deadline"></span></div>
+                                            </th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="papersList" class="bg-white divide-y divide-gray-200"></tbody>
+                                </table>
+                                <p id="noPaperDataMessage" class="hidden p-4 text-center text-gray-500 mt-4">Tidak ada paper yang ditemukan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 2: MANAJEMEN MATERI -->
+                <div id="materiView" class="view-content hidden space-y-4">
+                    <div class="main-page-header">
+                        <h1 class="text-3xl font-bold text-gray-800 flex items-center p-0">
+                            <i data-lucide="folder-tree" class="w-8 h-8 mr-3 text-yellow-600"></i>
+                            Manajemen Materi
+                        </h1>
+                        <p class="text-sm text-gray-500 mt-1 pl-11">Arsip dan kelola materi presentasi atau *sharing knowledge*.</p>
+                    </div>
+
+                    <div class="view-background-texture space-y-8 p-6">
+                        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border-t-4 border-yellow-500">
+                            <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
+                                <i data-lucide="folder-plus" class="w-6 h-6"></i>
+                                <span>Tambah Materi Baru</span>
+                            </h2>
+                            <form id="materiForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <select id="divisi" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                                    <option value="" disabled selected>Pilih Divisi (Wajib)</option>
+                                    <option value="5G">5G</option>
+                                    <option value="IoT">IoT</option>
+                                    <option value="Umum">Umum</option>
+                                </select>
+                                <input type="text" id="judul_materi" placeholder="Judul Materi (Wajib)" required
+                                    class="col-span-1 md:col-span-2 p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                                <input type="text" id="pembuat" placeholder="Nama Pembuat" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="date" id="tanggal_jadi" placeholder="Tanggal Jadi" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="url" id="link_materi" placeholder="Link Materi (URL Wajib)" required class="p-3 border border-gray-300 rounded-lg">
+                                <input type="url" id="ppt_link_materi" placeholder="Link PPT/Slide (Opsional)" class="p-3 border border-gray-300 rounded-lg">
+                                
+                                <button type="submit" id="submitMateriButton"
+                                    class="col-span-1 md:col-span-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-xl transition duration-300 shadow-xl shadow-yellow-400/50 disabled:opacity-50 flex items-center justify-center space-x-2">
+                                </button>
+                                <p id="formMateriMessage" class="col-span-3 text-sm text-center hidden"></p>
+                            </form>
+                        </div>
+
+                        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
+                            <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
+                                <i data-lucide="list" class="w-6 h-6"></i>
+                                <span>Daftar Materi</span>
+                            </h2>
+                            <input type="text" id="searchMateri" placeholder="Cari berdasarkan Judul atau Pembuat..."
+                                class="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th onclick="handleHeaderSortClick('judul_materi', 'materi')" data-sort-key="judul_materi" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">
+                                                <div class="flex items-center space-x-1"><span>Judul Materi</span> <span class="sort-icon-wrapper materi" data-col="judul_materi"></span></div>
+                                            </th>
+                                            <th onclick="handleHeaderSortClick('divisi', 'materi')" data-sort-key="divisi" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">
+                                                <div class="flex items-center space-x-1"><span>Divisi</span> <span class="sort-icon-wrapper materi" data-col="divisi"></span></div>
+                                            </th>
+                                            <th onclick="handleHeaderSortClick('pembuat', 'materi')" data-sort-key="pembuat" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell cursor-pointer hover:bg-gray-100 sortable-header">
+                                                <div class="flex items-center space-x-1"><span>Pembuat</span> <span class="sort-icon-wrapper materi" data-col="pembuat"></span></div>
+                                            </th>
+                                            <th onclick="handleHeaderSortClick('tanggal_jadi', 'materi')" data-sort-key="tanggal_jadi" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell cursor-pointer hover:bg-gray-100 sortable-header">
+                                                <div class="flex items-center space-x-1"><span>Tgl Jadi</span> <span class="sort-icon-wrapper materi" data-col="tanggal_jadi"></span></div>
+                                            </th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="materiList" class="bg-white divide-y divide-gray-200"></tbody>
+                                </table>
+                                <p id="noMateriDataMessage" class="hidden p-4 text-center text-gray-500 mt-4">Tidak ada materi yang ditemukan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 3: MANAJEMEN ANGGOTA -->
+                <div id="anggotaView" class="view-content hidden space-y-4">
+                    <div class="main-page-header">
+                        <h1 class="text-3xl font-bold text-gray-800 flex items-center p-0">
+                            <i data-lucide="users" class="w-8 h-8 mr-3 text-yellow-600"></i>
+                            Data Anggota Hexacomm
+                        </h1>
+                        <p class="text-sm text-gray-500 mt-1 pl-11">Kelola data anggota aktif saat ini.</p>
+                    </div>
+
+                    <div class="view-background-texture space-y-8 p-6">
+                        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border-t-4 border-yellow-500">
+                            <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
+                                <i data-lucide="user-plus" class="w-6 h-6"></i>
+                                <span>Tambah Anggota Baru</span>
+                            </h2>
+                            <form id="anggotaForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <input type="text" id="anggota_nama" placeholder="Nama Lengkap (Wajib)" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                                <input type="text" id="anggota_batch" placeholder="Batch (Ex: B1)" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="number" id="anggota_angkatan" placeholder="Angkatan (Ex: 2021)" min="2010" max="2100" class="p-3 border border-gray-300 rounded-lg">
+                                <select id="anggota_jabatan" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                                    <option value="" disabled selected>Pilih Jabatan (Wajib)</option>
+                                </select>
+                                <select id="anggota_divisi" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                                    <option value="" disabled selected>Pilih Divisi (Wajib)</option>
+                                </select>
+                                <input type="email" id="anggota_email" placeholder="Email (Wajib)" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                                <input type="tel" id="anggota_no_handphone" placeholder="No. Handphone" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="date" id="anggota_tanggal_lahir" placeholder="Tanggal Lahir" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="text" id="anggota_organisasi_lain" placeholder="Organisasi Lain" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="url" id="anggota_link_cv" placeholder="Link CV/Portofolio (URL)" class="col-span-1 md:col-span-2 p-3 border border-gray-300 rounded-lg">
+
+                                <button type="submit" id="submitAnggotaButton"
+                                    class="col-span-1 md:col-span-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-xl transition duration-300 shadow-xl shadow-yellow-400/50 disabled:opacity-50 flex items-center justify-center space-x-2">
+                                </button>
+                                <p id="formAnggotaMessage" class="col-span-3 text-sm text-center hidden"></p>
+                            </form>
+                        </div>
+
+                        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
+                            <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
+                                <i data-lucide="list-video" class="w-6 h-6"></i>
+                                <span>Daftar Anggota</span>
+                            </h2>
+                            <input type="text" id="searchAnggota" placeholder="Cari berdasarkan Nama, Jabatan, atau Divisi..."
+                                class="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200 min-w-max">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th onclick="handleHeaderSortClick('nama', 'anggota')" data-sort-key="nama" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Nama <span class="sort-icon-wrapper anggota" data-col="nama"></span></th>
+                                            <th onclick="handleHeaderSortClick('batch', 'anggota')" data-sort-key="batch" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Batch <span class="sort-icon-wrapper anggota" data-col="batch"></span></th>
+                                            <th onclick="handleHeaderSortClick('jabatan', 'anggota')" data-sort-key="jabatan" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Jabatan <span class="sort-icon-wrapper anggota" data-col="jabatan"></span></th>
+                                            <th onclick="handleHeaderSortClick('divisi', 'anggota')" data-sort-key="divisi" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Divisi <span class="sort-icon-wrapper anggota" data-col="divisi"></span></th>
+                                            <th onclick="handleHeaderSortClick('angkatan', 'anggota')" data-sort-key="angkatan" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Angkatan <span class="sort-icon-wrapper anggota" data-col="angkatan"></span></th>
+                                            <th onclick="handleHeaderSortClick('tanggal_lahir', 'anggota')" data-sort-key="tanggal_lahir" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Tgl Lahir <span class="sort-icon-wrapper anggota" data-col="tanggal_lahir"></span></th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No. HP</th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Org Lain</th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CV Link</th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="anggotaList" class="bg-white divide-y divide-gray-200"></tbody>
+                                </table>
+                                <p id="noAnggotaDataMessage" class="hidden p-4 text-center text-gray-500 mt-4">Tidak ada anggota yang ditemukan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 4: MANAJEMEN ALUMNI -->
+                <div id="alumniView" class="view-content hidden space-y-4">
+                    <div class="main-page-header">
+                        <h1 class="text-3xl font-bold text-gray-800 flex items-center p-0">
+                            <i data-lucide="graduation-cap" class="w-8 h-8 mr-3 text-yellow-600"></i>
+                            Data Alumni Hexacomm
+                        </h1>
+                        <p class="text-sm text-gray-500 mt-1 pl-11">Arsip dan kelola data alumni Hexacomm.</p>
+                    </div>
+
+                    <div class="view-background-texture space-y-8 p-6">
+                        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border-t-4 border-yellow-500">
+                            <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
+                                <i data-lucide="briefcase-business" class="w-6 h-6"></i>
+                                <span>Tambah Data Alumni</span>
+                            </h2>
+                            <form id="alumniForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <input type="text" id="alumni_nama" placeholder="Nama Lengkap (Wajib)" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                                <input type="text" id="alumni_batch" placeholder="Batch (Ex: B0)" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="number" id="alumni_angkatan" placeholder="Angkatan (Ex: 2020)" min="2010" max="2100" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="text" id="alumni_bidang" placeholder="Bidang/Jurusan" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="text" id="alumni_tempat_kerja" placeholder="Tempat Kerja Saat Ini" class="col-span-1 md:col-span-2 p-3 border border-gray-300 rounded-lg">
+                                <input type="tel" id="alumni_no_handphone" placeholder="No. Handphone" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="email" id="alumni_email" placeholder="Email" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="url" id="alumni_link_cv" placeholder="Link CV/Portofolio (URL)" class="p-3 border border-gray-300 rounded-lg">
+
+                                <button type="submit" id="submitAlumniButton"
+                                    class="col-span-1 md:col-span-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-xl transition duration-300 shadow-xl shadow-yellow-400/50 disabled:opacity-50 flex items-center justify-center space-x-2">
+                                </button>
+                                <p id="formAlumniMessage" class="col-span-3 text-sm text-center hidden"></p>
+                            </form>
+                        </div>
+
+                        <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
+                            <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
+                                <i data-lucide="users-round" class="w-6 h-6"></i>
+                                <span>Daftar Alumni</span>
+                            </h2>
+                            <input type="text" id="searchAlumni" placeholder="Cari berdasarkan Nama, Tempat Kerja, atau Bidang..."
+                                class="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200 min-w-max">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th onclick="handleHeaderSortClick('nama', 'alumni')" data-sort-key="nama" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Nama <span class="sort-icon-wrapper alumni" data-col="nama"></span></th>
+                                            <th onclick="handleHeaderSortClick('batch', 'alumni')" data-sort-key="batch" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Batch <span class="sort-icon-wrapper alumni" data-col="batch"></span></th>
+                                            <th onclick="handleHeaderSortClick('angkatan', 'alumni')" data-sort-key="angkatan" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Angkatan <span class="sort-icon-wrapper alumni" data-col="angkatan"></span></th>
+                                            <th onclick="handleHeaderSortClick('bidang', 'alumni')" data-sort-key="bidang" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Bidang <span class="sort-icon-wrapper alumni" data-col="bidang"></span></th>
+                                            <th onclick="handleHeaderSortClick('tempat_kerja', 'alumni')" data-sort-key="tempat_kerja" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable-header">Tempat Kerja <span class="sort-icon-wrapper alumni" data-col="tempat_kerja"></span></th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No. HP</th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CV Link</th>
+                                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="alumniList" class="bg-white divide-y divide-gray-200"></tbody>
+                                </table>
+                                <p id="noAlumniDataMessage" class="hidden p-4 text-center text-gray-500 mt-4">Tidak ada alumni yang ditemukan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    
+    <!-- MODAL EDIT PAPER -->
+    <div id="editModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="text-2xl font-bold text-yellow-700 mb-4 flex items-center space-x-2 border-b pb-2">
+                <i data-lucide="file-edit" class="w-6 h-6"></i>
+                <span>Edit Detail Paper</span>
+            </h3>
+            <button onclick="closeEditModal('paper')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <form id="editPaperForm" class="space-y-4">
+                <input type="hidden" id="edit-id-paper">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1">Judul Paper (ID)</label>
+                        <p id="edit-title-display-paper" class="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg font-semibold text-gray-800 truncate"></p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-deadline-paper">Deadline</label>
+                        <input type="date" id="edit-deadline-paper" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-authors-paper">Penulis</label>
+                        <input type="text" id="edit-authors-paper" placeholder="Nama Penulis" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-reference_link-paper">Link Referensi</label>
+                        <input type="url" id="edit-reference_link-paper" placeholder="Link Referensi" class="w-full p-3 border border-gray-300 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-status-paper">Status (Wajib)</label>
+                        <select id="edit-status-paper" required class="w-full p-3 border border-gray-300 rounded-lg">
+                            <option value="Draft">Draft</option>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Under Review">Under Review</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-overleaf_link-paper">Link Overleaf</label>
+                        <input type="url" id="edit-overleaf_link-paper" placeholder="Link Overleaf" class="w-full p-3 border border-gray-300 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-category-paper">Kategori</label>
+                        <input type="text" id="edit-category-paper" placeholder="Kategori" class="w-full p-3 border border-gray-300 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-ppt_link-paper">Link PPT/Slide</label>
+                        <input type="url" id="edit-ppt_link-paper" placeholder="Link PPT" class="w-full p-3 border border-gray-300 rounded-lg">
+                    </div>
+                </div>
+                <p id="editFormPaperMessage" class="text-sm text-center font-semibold hidden"></p>
+                <button type="submit" id="saveEditPaperButton" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md disabled:opacity-50 flex items-center justify-center space-x-2">
+                    <i data-lucide="check" class="w-5 h-5"></i> <span>Simpan Perubahan</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- MODAL EDIT MATERI -->
+    <div id="editMateriModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="text-2xl font-bold text-yellow-700 mb-4 flex items-center space-x-2 border-b pb-2">
+                <i data-lucide="file-edit" class="w-6 h-6"></i>
+                <span>Edit Detail Materi</span>
+            </h3>
+            <button onclick="closeEditModal('materi')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <form id="editMateriForm" class="space-y-4">
+                <input type="hidden" id="edit-id-materi">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1">Judul Materi</label>
+                        <input type="text" id="edit-judul_materi" required class="w-full p-3 border border-gray-300 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-divisi">Divisi (Wajib)</label>
+                        <select id="edit-divisi" required class="w-full p-3 border border-gray-300 rounded-lg">
                             <option value="5G">5G</option>
                             <option value="IoT">IoT</option>
                             <option value="Umum">Umum</option>
                         </select>
-                        <input type="url" id="m_link" placeholder="Link GDrive" class="p-3 border rounded-lg" required>
-                        <button type="submit" class="bg-yellow-600 text-white p-3 rounded-lg font-bold">Tambah</button>
-                    </form>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-pembuat">Pembuat</label>
+                        <input type="text" id="edit-pembuat" class="w-full p-3 border border-gray-300 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-tanggal_jadi">Tanggal Jadi</label>
+                        <input type="date" id="edit-tanggal_jadi" class="w-full p-3 border border-gray-300 rounded-lg">
+                    </div>
                 </div>
-                <div class="view-background-texture">
-                    <tbody id="materiList"></tbody>
-                    <div id="materiContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-link_materi">Link Materi (Wajib)</label>
+                    <input type="url" id="edit-link_materi" required class="w-full p-3 border border-gray-300 rounded-lg">
                 </div>
-            </div>
-
-            <!-- ANGGOTA VIEW -->
-            <div id="anggotaView" class="view-content hidden">
-                <div class="main-page-header"><h1 class="text-2xl font-bold">Data Anggota Aktif</h1></div>
-                <div class="admin-only bg-white p-6 rounded-2xl shadow-sm mb-6 hidden">
-                    <form id="anggotaForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <input type="text" id="a_nama" placeholder="Nama" class="p-3 border rounded-lg" required>
-                        <input type="text" id="a_batch" placeholder="Batch" class="p-3 border rounded-lg">
-                        <select id="a_divisi" class="p-3 border rounded-lg">
-                            <option value="5G">5G</option>
-                            <option value="IoT">IoT</option>
-                        </select>
-                        <button type="submit" class="bg-yellow-600 text-white p-3 rounded-lg font-bold">Tambah Anggota</button>
-                    </form>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-ppt_link_materi">Link PPT/Slide</label>
+                    <input type="url" id="edit-ppt_link_materi" class="w-full p-3 border border-gray-300 rounded-lg">
                 </div>
-                <div class="view-background-texture">
-                    <div id="anggotaList" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-                </div>
-            </div>
-
-            <!-- ALUMNI VIEW -->
-            <div id="alumniView" class="view-content hidden">
-                <div class="main-page-header"><h1 class="text-2xl font-bold">Database Alumni</h1></div>
-                <div class="view-background-texture">
-                    <div id="alumniList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- MODAL EDIT GENERIC -->
-    <div id="editModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <h3 id="modalTitle" class="text-xl font-bold mb-4">Edit Data</h3>
-            <div id="modalBody"></div>
-            <div class="flex justify-end gap-2 mt-6">
-                <button onclick="closeModal()" class="px-4 py-2 border rounded-lg">Batal</button>
-                <button id="saveBtn" class="px-4 py-2 bg-yellow-600 text-white rounded-lg">Simpan</button>
-            </div>
+                <p id="editFormMateriMessage" class="text-sm text-center font-semibold hidden"></p>
+                <button type="submit" id="saveEditMateriButton" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md flex items-center justify-center space-x-2">
+                    <i data-lucide="check" class="w-5 h-5"></i> <span>Simpan Perubahan Materi</span>
+                </button>
+            </form>
         </div>
     </div>
 
+    <!-- MODAL EDIT ANGGOTA -->
+    <div id="editAnggotaModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="text-2xl font-bold text-yellow-700 mb-4 flex items-center space-x-2 border-b pb-2">
+                <i data-lucide="user-edit" class="w-6 h-6"></i>
+                <span>Edit Detail Anggota</span>
+            </h3>
+            <button onclick="closeEditModal('anggota')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <form id="editAnggotaForm" class="space-y-4">
+                <input type="hidden" id="edit-id-anggota">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="edit-anggota_nama" placeholder="Nama Lengkap" required class="p-3 border rounded-lg">
+                    <input type="text" id="edit-anggota_batch" placeholder="Batch" class="p-3 border rounded-lg">
+                    <input type="number" id="edit-anggota_angkatan" placeholder="Angkatan" class="p-3 border rounded-lg">
+                    <select id="edit-anggota_jabatan" required class="p-3 border rounded-lg"></select>
+                    <select id="edit-anggota_divisi" required class="p-3 border rounded-lg"></select>
+                    <input type="email" id="edit-anggota_email" placeholder="Email" class="p-3 border rounded-lg">
+                    <input type="tel" id="edit-anggota_no_handphone" placeholder="No. HP" class="p-3 border rounded-lg">
+                    <input type="date" id="edit-anggota_tanggal_lahir" class="p-3 border rounded-lg">
+                    <input type="text" id="edit-anggota_organisasi_lain" placeholder="Organisasi Lain" class="p-3 border rounded-lg">
+                    <input type="url" id="edit-anggota_link_cv" placeholder="CV Link" class="col-span-1 md:col-span-2 p-3 border rounded-lg">
+                </div>
+                <p id="editFormAnggotaMessage" class="text-sm text-center font-semibold hidden"></p>
+                <button type="submit" id="saveEditAnggotaButton" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg flex items-center justify-center space-x-2">
+                    <i data-lucide="check" class="w-5 h-5"></i> <span>Simpan Perubahan</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT ALUMNI -->
+    <div id="editAlumniModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="text-2xl font-bold text-yellow-700 mb-4 flex items-center space-x-2 border-b pb-2">
+                <i data-lucide="archive" class="w-6 h-6"></i>
+                <span>Edit Data Alumni</span>
+            </h3>
+            <button onclick="closeEditModal('alumni')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <form id="editAlumniForm" class="space-y-4">
+                <input type="hidden" id="edit-id-alumni">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="edit-alumni_nama" required class="p-3 border rounded-lg">
+                    <input type="text" id="edit-alumni_batch" class="p-3 border rounded-lg">
+                    <input type="number" id="edit-alumni_angkatan" class="p-3 border rounded-lg">
+                    <input type="text" id="edit-alumni_bidang" class="p-3 border rounded-lg">
+                    <input type="text" id="edit-alumni_tempat_kerja" class="p-3 border rounded-lg">
+                    <input type="tel" id="edit-alumni_no_handphone" class="p-3 border rounded-lg">
+                    <input type="email" id="edit-alumni_email" class="p-3 border rounded-lg">
+                    <input type="url" id="edit-alumni_link_cv" class="p-3 border rounded-lg">
+                </div>
+                <p id="editFormAlumniMessage" class="text-sm text-center font-semibold hidden"></p>
+                <button type="submit" id="saveEditAlumniButton" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg flex items-center justify-center space-x-2">
+                    <i data-lucide="check" class="w-5 h-5"></i> <span>Simpan Perubahan</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
     <script>
-        // CONFIG
-        const SB_URL = 'https://wqqqilascgnntonwswha.supabase.co';
-        const SB_KEY = 'sb_publishable_dvGcqxfy3CtBypmOm0g5eQ__nMm3ghP';
-        const client = supabase.createClient(SB_URL, SB_KEY);
+        // --- KONFIGURASI SUPABASE ---
+        const SUPABASE_URL = 'https://wqqqilascgnntonwswha.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_dvGcqxfy3CtBypmOm0g5eQ__nMm3ghP';
+        
+        const TABLE_NAME_PAPER = 'papers';
+        const TABLE_NAME_MATERI = 'materi';
+        const TABLE_NAME_ANGGOTA = 'anggota_hexacomm';
+        const TABLE_NAME_ALUMNI = 'alumni';
+        const USER_TABLE_NAME = 'users';
 
-        // STATE
-        let currentUser = null;
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // AUTH
+        // --- PILIHAN DROPDOWN ---
+        const JABATAN_OPTIONS = [
+            "Ketua", "Wakil Ketua",
+            "Koor Sekretaris", "Staff Sekretaris",
+            "Koor Bendahara", "Staff Bendahara",
+            "Koor RnD", "Staff RnD",
+            "Koor HRD", "Staff HRD",
+            "Koor PR", "Staff PR"
+        ];
+        const DIVISI_OPTIONS = ["5G", "IoT", "Umum"];
+
+        // --- REFERENSI DOM ---
+        const loginSection = document.getElementById('loginSection');
+        const appSection = document.getElementById('appSection');
         const loginForm = document.getElementById('loginForm');
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-            const errEl = document.getElementById('loginError');
+        const loginError = document.getElementById('loginError');
+        const logoutButton = document.getElementById('logoutButton');
 
-            const { data, error } = await client.from('users').select('*').eq('username', u).eq('password', p).maybeSingle();
-            
-            if (data) {
-                currentUser = data;
-                sessionStorage.setItem('hex_user', JSON.stringify(data));
-                initApp();
+        // Navigasi & View
+        const mainNav = document.getElementById('mainNav');
+        const paperView = document.getElementById('paperView');
+        const materiView = document.getElementById('materiView');
+        const anggotaView = document.getElementById('anggotaView');
+        const alumniView = document.getElementById('alumniView');
+
+        // Paper Elements
+        const papersList = document.getElementById('papersList');
+        const paperForm = document.getElementById('paperForm');
+        const searchPaperInput = document.getElementById('searchPaper');
+        const noPaperDataMessage = document.getElementById('noPaperDataMessage');
+        const formPaperMessage = document.getElementById('formPaperMessage');
+        const submitPaperButton = document.getElementById('submitPaperButton');
+        const editModal = document.getElementById('editModal');
+        const editPaperForm = document.getElementById('editPaperForm');
+        const editFormPaperMessage = document.getElementById('editFormPaperMessage');
+        const saveEditPaperButton = document.getElementById('saveEditPaperButton');
+
+        // Materi Elements
+        const materiList = document.getElementById('materiList');
+        const materiForm = document.getElementById('materiForm');
+        const searchMateriInput = document.getElementById('searchMateri');
+        const noMateriDataMessage = document.getElementById('noMateriDataMessage');
+        const formMateriMessage = document.getElementById('formMateriMessage');
+        const submitMateriButton = document.getElementById('submitMateriButton');
+        const editMateriModal = document.getElementById('editMateriModal');
+        const editMateriForm = document.getElementById('editMateriForm');
+        const editFormMateriMessage = document.getElementById('editFormMateriMessage');
+        const saveEditMateriButton = document.getElementById('saveEditMateriButton');
+
+        // Anggota Elements
+        const anggotaList = document.getElementById('anggotaList');
+        const anggotaForm = document.getElementById('anggotaForm');
+        const searchAnggotaInput = document.getElementById('searchAnggota');
+        const noAnggotaDataMessage = document.getElementById('noAnggotaDataMessage');
+        const formAnggotaMessage = document.getElementById('formAnggotaMessage');
+        const submitAnggotaButton = document.getElementById('submitAnggotaButton');
+        const editAnggotaModal = document.getElementById('editAnggotaModal');
+        const editAnggotaForm = document.getElementById('editAnggotaForm');
+        const editFormAnggotaMessage = document.getElementById('editFormAnggotaMessage');
+        const saveEditAnggotaButton = document.getElementById('saveEditAnggotaButton');
+
+        // Alumni Elements
+        const alumniList = document.getElementById('alumniList');
+        const alumniForm = document.getElementById('alumniForm');
+        const searchAlumniInput = document.getElementById('searchAlumni');
+        const noAlumniDataMessage = document.getElementById('noAlumniDataMessage');
+        const formAlumniMessage = document.getElementById('formAlumniMessage');
+        const submitAlumniButton = document.getElementById('submitAlumniButton');
+        const editAlumniModal = document.getElementById('editAlumniModal');
+        const editAlumniForm = document.getElementById('editAlumniForm');
+        const editFormAlumniMessage = document.getElementById('editFormAlumniMessage');
+        const saveEditAlumniButton = document.getElementById('saveEditAlumniButton');
+
+        const sortState = {
+            paper: { col: 'created_at', order: 'desc' },
+            materi: { col: 'created_at', order: 'desc' },
+            anggota: { col: 'nama', order: 'asc' },
+            alumni: { col: 'angkatan', order: 'desc' }
+        };
+        
+        let currentActiveView = 'paper';
+
+        // --- ROLE PERMISSIONS ---
+        function applyPermissions() {
+            const role = sessionStorage.getItem('userRole') || 'viewer';
+            const containers = [
+                paperForm ? paperForm.parentElement : null,
+                materiForm ? materiForm.parentElement : null,
+                anggotaForm ? anggotaForm.parentElement : null,
+                alumniForm ? alumniForm.parentElement : null
+            ];
+
+            if (role !== 'admin') {
+                containers.forEach(c => { if (c) c.classList.add('hidden'); });
             } else {
-                errEl.innerText = "Kredensial salah atau user tidak ditemukan.";
-                errEl.classList.remove('hidden');
+                containers.forEach(c => { if (c) c.classList.remove('hidden'); });
             }
-        });
-
-        function initApp() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('appSection').classList.remove('hidden');
-            
-            if (currentUser.role === 'admin') {
-                document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
-            }
-
-            switchView('paper');
-            lucide.createIcons();
         }
 
-        // NAVIGATION
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => switchView(item.dataset.view));
-        });
+        // --- UTILITY ---
+        function renderButtonContent(text, icon = 'file-plus') {
+            const spinClass = icon === 'loader-circle' ? 'animate-spin-fast' : '';
+            return `<i data-lucide="${icon}" class="w-5 h-5 mr-2 ${spinClass}"></i> <span>${text}</span>`;
+        }
 
-        function switchView(view) {
-            document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
-            document.querySelectorAll('.nav-item').forEach(n => {
-                n.classList.replace('nav-item-active', 'nav-item-inactive');
+        function showMessage(element, message, colorClass) {
+            if (!element) return;
+            element.textContent = message;
+            element.className = `col-span-3 text-sm text-center font-semibold ${colorClass}`;
+            element.classList.remove('hidden');
+            setTimeout(() => { element.classList.add('hidden'); }, 4000);
+        }
+
+        function populateSelect(selectElement, options, currentValue = '') {
+            if (!selectElement) return;
+            selectElement.innerHTML = `<option value="" disabled ${currentValue ? '' : 'selected'}>Pilih...</option>`;
+            options.forEach(option => {
+                const isSelected = option === currentValue ? 'selected' : '';
+                selectElement.innerHTML += `<option value="${option}" ${isSelected}>${option}</option>`;
             });
-            
-            document.getElementById(view + 'View').classList.remove('hidden');
-            document.querySelector(`[data-view="${view}"]`).classList.replace('nav-item-inactive', 'nav-item-active');
-            
-            if (view === 'paper') fetchPapers();
-            if (view === 'materi') fetchMateri();
-            if (view === 'anggota') fetchAnggota();
-            if (view === 'alumni') fetchAlumni();
         }
 
-        // PAPER LOGIC
-        async function fetchPapers() {
-            const list = document.getElementById('paperList');
-            list.innerHTML = '<tr><td colspan="4" class="p-4 text-center">Memuat...</td></tr>';
-            const { data } = await client.from('papers').select('*').order('created_at', { ascending: false });
-            
-            list.innerHTML = data.map(p => `
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="p-4 font-semibold">${p.title}</td>
-                    <td class="p-4">${p.authors || '-'}</td>
-                    <td class="p-4"><span class="px-2 py-1 bg-yellow-100 text-xs rounded-full font-bold">${p.status}</span></td>
-                    <td class="p-4">
-                        ${currentUser.role === 'admin' ? `<button onclick="deleteData('papers', '${p.id}', fetchPapers)" class="text-red-500 mr-2">Hapus</button>` : ''}
-                        <a href="${p.overleaf_link || '#'}" target="_blank" class="text-blue-500">Buka</a>
-                    </td>
-                </tr>
-            `).join('');
-        }
+        function showView(viewName) {
+            currentActiveView = viewName;
+            document.querySelectorAll('.view-content').forEach(view => view.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(nav => {
+                nav.classList.remove('nav-item-active');
+                nav.classList.add('nav-item-inactive');
+            });
 
-        document.getElementById('paperForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const payload = {
-                title: document.getElementById('p_title').value,
-                authors: document.getElementById('p_authors').value,
-                status: document.getElementById('p_status').value,
-                category: document.getElementById('p_cat').value
-            };
-            await client.from('papers').insert([payload]);
-            e.target.reset();
-            fetchPapers();
-        });
+            const targetView = document.getElementById(`${viewName}View`);
+            const targetNav = document.getElementById(`nav-${viewName}`);
 
-        // MATERI LOGIC
-        async function fetchMateri() {
-            const container = document.getElementById('materiContainer');
-            const { data } = await client.from('materi').select('*').order('created_at', { ascending: false });
-            container.innerHTML = data.map(m => `
-                <div class="p-4 bg-gray-50 rounded-xl border flex justify-between items-center">
-                    <div>
-                        <div class="text-xs font-bold text-yellow-600 uppercase">${m.divisi}</div>
-                        <div class="font-bold">${m.judul_materi}</div>
-                    </div>
-                    <a href="${m.link_materi}" target="_blank" class="p-2 bg-white rounded-lg shadow-sm">
-                        <i data-lucide="external-link" class="w-4 h-4 text-gray-600"></i>
-                    </a>
-                </div>
-            `).join('');
+            if (targetView) targetView.classList.remove('hidden');
+            if (targetNav) {
+                targetNav.classList.add('nav-item-active');
+                targetNav.classList.remove('nav-item-inactive');
+            }
+
+            const getSearchTerm = (input) => input ? input.value : '';
+
+            if (viewName === 'paper') fetchPapers(getSearchTerm(searchPaperInput));
+            else if (viewName === 'materi') fetchMateri(getSearchTerm(searchMateriInput));
+            else if (viewName === 'anggota') fetchAnggota(getSearchTerm(searchAnggotaInput));
+            else if (viewName === 'alumni') fetchAlumni(getSearchTerm(searchAlumniInput));
             lucide.createIcons();
         }
-
-        document.getElementById('materiForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const payload = {
-                judul_materi: document.getElementById('m_judul').value,
-                divisi: document.getElementById('m_divisi').value,
-                link_materi: document.getElementById('m_link').value
-            };
-            await client.from('materi').insert([payload]);
-            e.target.reset();
-            fetchMateri();
+        
+        mainNav && mainNav.addEventListener('click', (e) => {
+            const navItem = e.target.closest('.nav-item');
+            if (navItem) showView(navItem.getAttribute('data-view'));
         });
 
-        // ANGGOTA LOGIC
-        async function fetchAnggota() {
-            const list = document.getElementById('anggotaList');
-            const { data } = await client.from('anggota_hexacomm').select('*').order('nama');
-            list.innerHTML = data.map(a => `
-                <div class="p-4 bg-white rounded-xl shadow-sm border border-yellow-100">
-                    <div class="font-bold text-lg">${a.nama}</div>
-                    <div class="text-sm text-gray-500">${a.jabatan || 'Anggota'} - ${a.divisi}</div>
-                    <div class="mt-2 text-xs text-gray-400">Batch: ${a.batch || '-'} | Angkatan: ${a.angkatan || '-'}</div>
-                </div>
-            `).join('');
-        }
-
-        document.getElementById('anggotaForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const payload = {
-                nama: document.getElementById('a_nama').value,
-                batch: document.getElementById('a_batch').value,
-                divisi: document.getElementById('a_divisi').value,
-                jabatan: 'Staff'
-            };
-            await client.from('anggota_hexacomm').insert([payload]);
-            e.target.reset();
-            fetchAnggota();
-        });
-
-        // ALUMNI LOGIC
-        async function fetchAlumni() {
-            const list = document.getElementById('alumniList');
-            const { data } = await client.from('alumni').select('*').order('angkatan', { ascending: false });
-            list.innerHTML = data.map(a => `
-                <div class="p-4 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-                    <div class="font-bold">${a.nama}</div>
-                    <div class="text-xs text-gray-500">${a.tempat_kerja || 'Mencari Karir'}</div>
-                    <div class="mt-1 text-xs font-semibold text-yellow-600">Lulusan ${a.angkatan}</div>
-                </div>
-            `).join('');
-        }
-
-        // UTILS
-        async function deleteData(table, id, callback) {
-            if (!confirm('Hapus data ini?')) return;
-            await client.from(table).delete().eq('id', id);
-            callback();
-        }
-
-        document.getElementById('logoutButton').onclick = () => {
-            sessionStorage.clear();
-            location.reload();
-        };
-
-        // Modal Logic
-        function closeModal() { document.getElementById('editModal').classList.add('hidden'); }
-
-        // Initial Session Check
-        window.onload = () => {
-            const saved = sessionStorage.getItem('hex_user');
-            if (saved) {
-                currentUser = JSON.parse(saved);
-                initApp();
+        // --- SORTING ---
+        function updateTableHeaders(type) {
+            document.querySelectorAll(`.sort-icon-wrapper.${type}`).forEach(wrapper => { wrapper.innerHTML = ''; });
+            const state = sortState[type];
+            const icon = state.order === 'asc' ? 'arrow-up' : 'arrow-down';
+            const activeWrapper = document.querySelector(`.sort-icon-wrapper.${type}[data-col="${state.col}"]`);
+            if (activeWrapper) {
+                activeWrapper.innerHTML = `<i data-lucide="${icon}" class="w-3 h-3 text-yellow-600"></i>`;
+                lucide.createIcons();
             }
+        }
+
+        window.handleHeaderSortClick = (column, type) => {
+            const state = sortState[type];
+            if (state.col === column) state.order = state.order === 'asc' ? 'desc' : 'asc';
+            else { state.col = column; state.order = 'asc'; }
+            showView(type);
+            updateTableHeaders(type);
         };
+
+        // --- LOGIN & SESSION ---
+        function checkSession() {
+            if (sessionStorage.getItem('isLoggedIn') === 'true') {
+                showApp();
+                showView(currentActiveView);
+            } else showLogin();
+        }
+
+        function showLogin() {
+            loginSection.classList.remove('hidden');
+            appSection.classList.add('hidden');
+        }
+
+        function showApp() {
+            loginSection.classList.add('hidden');
+            appSection.classList.remove('hidden');
+            applyPermissions();
+        }
+
+        loginForm && loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Memeriksa...";
+            loginError.classList.add('hidden');
+
+            try {
+                const { data, error } = await supabaseClient.from(USER_TABLE_NAME).select('*').eq('username', user).eq('password', pass).maybeSingle();
+                if (error) throw error;
+                if (data) {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    sessionStorage.setItem('userRole', data.role || 'viewer');
+                    showApp();
+                    showView(currentActiveView);
+                } else throw new Error("Username atau Password salah!");
+            } catch (err) {
+                loginError.textContent = err.message;
+                loginError.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Masuk";
+            }
+        });
+
+        logoutButton && logoutButton.addEventListener('click', () => {
+            sessionStorage.clear();
+            window.location.reload(); 
+        });
+
+        // --- DATA FETCHING (PAPER) ---
+        async function fetchPapers(searchTerm = '') {
+            papersList.innerHTML = `<tr><td colspan="6" class="p-4 text-center">Memuat...</td></tr>`;
+            const state = sortState.paper;
+            try {
+                let query = supabaseClient.from(TABLE_NAME_PAPER).select('*').order(state.col, { ascending: state.order === 'asc' }); 
+                if (searchTerm) query = query.or(`title.ilike.%${searchTerm}%,authors.ilike.%${searchTerm}%`);
+                const { data, error } = await query;
+                if (error) throw error;
+                papersList.innerHTML = '';
+                if (data.length > 0) {
+                    data.forEach(p => papersList.insertAdjacentHTML('beforeend', createPaperRow(p)));
+                    lucide.createIcons();
+                } else noPaperDataMessage.classList.remove('hidden');
+            } catch (e) { papersList.innerHTML = `<tr><td colspan="6" class="text-red-500">${e.message}</td></tr>`; }
+        }
+
+        function createPaperRow(paper) {
+            const role = sessionStorage.getItem('userRole');
+            const deadline = paper.deadline ? new Date(paper.deadline).toLocaleDateString('id-ID') : '-';
+            const statusBadge = getStatusBadge(paper.status);
+            const paperJson = JSON.stringify(paper).replace(/'/g, "\\'");
+            
+            const links = `
+                ${paper.reference_link ? `<a href="${paper.reference_link}" target="_blank" class="p-1 text-yellow-600"><i data-lucide="link" class="w-4 h-4"></i></a>` : ''}
+                ${paper.overleaf_link ? `<a href="${paper.overleaf_link}" target="_blank" class="p-1 text-yellow-600"><i data-lucide="file-text" class="w-4 h-4"></i></a>` : ''}
+            `;
+            const editBtn = role === 'admin' ? `<button onclick='openEditModal("paper", ${paperJson})' class="p-1 text-blue-600"><i data-lucide="edit-3" class="w-4 h-4"></i></button>` : '';
+
+            return `<tr class="hover:bg-yellow-50">
+                <td class="px-3 py-4 font-medium text-gray-900">${paper.title}</td>
+                <td class="px-3 py-4 text-gray-500">${paper.authors || '-'}</td>
+                <td class="px-3 py-4">${statusBadge}</td>
+                <td class="px-3 py-4 hidden sm:table-cell">${paper.category || '-'}</td>
+                <td class="px-3 py-4 hidden sm:table-cell">${deadline}</td>
+                <td class="px-3 py-4 flex space-x-1">${links} ${editBtn}</td>
+            </tr>`;
+        }
+
+        // --- MATERI FETCHING ---
+        async function fetchMateri(searchTerm = '') {
+            materiList.innerHTML = `<tr><td colspan="5" class="p-4 text-center">Memuat...</td></tr>`;
+            try {
+                let query = supabaseClient.from(TABLE_NAME_MATERI).select('*').order(sortState.materi.col, { ascending: sortState.materi.order === 'asc' });
+                if (searchTerm) query = query.or(`judul_materi.ilike.%${searchTerm}%,pembuat.ilike.%${searchTerm}%`);
+                const { data, error } = await query;
+                if (error) throw error;
+                materiList.innerHTML = '';
+                data.forEach(m => materiList.insertAdjacentHTML('beforeend', createMateriRow(m)));
+                lucide.createIcons();
+            } catch (e) { materiList.innerHTML = `<tr><td colspan="5">${e.message}</td></tr>`; }
+        }
+
+        function createMateriRow(materi) {
+            const role = sessionStorage.getItem('userRole');
+            const materiJson = JSON.stringify(materi).replace(/'/g, "\\'");
+            return `<tr class="hover:bg-yellow-50">
+                <td class="px-3 py-4">${materi.judul_materi}</td>
+                <td class="px-3 py-4"><span class="px-2 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs">${materi.divisi}</span></td>
+                <td class="px-3 py-4 hidden sm:table-cell">${materi.pembuat || '-'}</td>
+                <td class="px-3 py-4 hidden sm:table-cell">${materi.tanggal_jadi || '-'}</td>
+                <td class="px-3 py-4 flex">
+                    <a href="${materi.link_materi}" target="_blank" class="p-1 text-yellow-600"><i data-lucide="link" class="w-4 h-4"></i></a>
+                    ${role === 'admin' ? `<button onclick='openEditModal("materi", ${materiJson})' class="p-1 text-blue-600"><i data-lucide="edit-3" class="w-4 h-4"></i></button>` : ''}
+                </td>
+            </tr>`;
+        }
+
+        // --- ANGGOTA & ALUMNI FETCHING ---
+        async function fetchAnggota(searchTerm = '') {
+            anggotaList.innerHTML = `<tr><td colspan="11" class="p-4 text-center">Memuat...</td></tr>`;
+            try {
+                let q = supabaseClient.from(TABLE_NAME_ANGGOTA).select('*').order(sortState.anggota.col, { ascending: sortState.anggota.order === 'asc' });
+                if (searchTerm) q = q.or(`nama.ilike.%${searchTerm}%,jabatan.ilike.%${searchTerm}%`);
+                const { data, error } = await q;
+                if (error) throw error;
+                anggotaList.innerHTML = '';
+                data.forEach(a => anggotaList.insertAdjacentHTML('beforeend', createAnggotaRow(a)));
+                lucide.createIcons();
+            } catch (e) { anggotaList.innerHTML = `<tr><td colspan="11">${e.message}</td></tr>`; }
+        }
+
+        function createAnggotaRow(a) {
+            const role = sessionStorage.getItem('userRole');
+            const dataJson = JSON.stringify(a).replace(/'/g, "\\'");
+            return `<tr class="hover:bg-yellow-50 text-xs">
+                <td class="px-3 py-4 font-bold">${a.nama}</td>
+                <td class="px-3 py-4">${a.batch || '-'}</td>
+                <td class="px-3 py-4">${a.jabatan}</td>
+                <td class="px-3 py-4">${a.divisi}</td>
+                <td class="px-3 py-4">${a.angkatan || '-'}</td>
+                <td class="px-3 py-4">${a.tanggal_lahir || '-'}</td>
+                <td class="px-3 py-4 text-blue-600 truncate max-w-[100px]">${a.email || '-'}</td>
+                <td class="px-3 py-4">${a.no_handphone || '-'}</td>
+                <td class="px-3 py-4">${a.organisasi_lain || '-'}</td>
+                <td class="px-3 py-4 text-center">${a.link_cv ? `<a href="${a.link_cv}" target="_blank" class="text-green-600"><i data-lucide="file-text" class="w-4 h-4"></i></a>` : '-'}</td>
+                <td class="px-3 py-4">${role === 'admin' ? `<button onclick='openEditModal("anggota", ${dataJson})' class="text-blue-600"><i data-lucide="edit-3" class="w-4 h-4"></i></button>` : ''}</td>
+            </tr>`;
+        }
+
+        async function fetchAlumni(searchTerm = '') {
+            alumniList.innerHTML = `<tr><td colspan="9" class="p-4 text-center">Memuat...</td></tr>`;
+            try {
+                let q = supabaseClient.from(TABLE_NAME_ALUMNI).select('*').order(sortState.alumni.col, { ascending: sortState.alumni.order === 'asc' });
+                if (searchTerm) q = q.or(`nama.ilike.%${searchTerm}%,bidang.ilike.%${searchTerm}%`);
+                const { data, error } = await q;
+                if (error) throw error;
+                alumniList.innerHTML = '';
+                data.forEach(a => alumniList.insertAdjacentHTML('beforeend', createAlumniRow(a)));
+                lucide.createIcons();
+            } catch (e) { alumniList.innerHTML = `<tr><td colspan="9">${e.message}</td></tr>`; }
+        }
+
+        function createAlumniRow(a) {
+            const role = sessionStorage.getItem('userRole');
+            const dataJson = JSON.stringify(a).replace(/'/g, "\\'");
+            return `<tr class="hover:bg-yellow-50 text-xs">
+                <td class="px-3 py-4 font-bold">${a.nama}</td>
+                <td class="px-3 py-4">${a.batch || '-'}</td>
+                <td class="px-3 py-4">${a.angkatan || '-'}</td>
+                <td class="px-3 py-4">${a.bidang || '-'}</td>
+                <td class="px-3 py-4">${a.tempat_kerja || '-'}</td>
+                <td class="px-3 py-4">${a.email || '-'}</td>
+                <td class="px-3 py-4">${a.no_handphone || '-'}</td>
+                <td class="px-3 py-4 text-center">${a.link_cv ? `<a href="${a.link_cv}" target="_blank" class="text-green-600"><i data-lucide="file-text" class="w-4 h-4"></i></a>` : '-'}</td>
+                <td class="px-3 py-4">${role === 'admin' ? `<button onclick='openEditModal("alumni", ${dataJson})' class="text-blue-600"><i data-lucide="edit-3" class="w-4 h-4"></i></button>` : ''}</td>
+            </tr>`;
+        }
+
+        // --- SUBMIT FORMS ---
+        paperForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const payload = {
+                title: document.getElementById('title').value,
+                authors: document.getElementById('authors').value,
+                status: document.getElementById('status').value,
+                category: document.getElementById('category').value,
+                deadline: document.getElementById('deadline').value || null
+            };
+            submitPaperButton.disabled = true;
+            const { error } = await supabaseClient.from(TABLE_NAME_PAPER).insert([payload]);
+            if (!error) { paperForm.reset(); fetchPapers(); }
+            submitPaperButton.disabled = false;
+        };
+
+        materiForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const payload = {
+                divisi: document.getElementById('divisi').value,
+                judul_materi: document.getElementById('judul_materi').value,
+                link_materi: document.getElementById('link_materi').value
+            };
+            const { error } = await supabaseClient.from(TABLE_NAME_MATERI).insert([payload]);
+            if (!error) { materiForm.reset(); fetchMateri(); }
+        };
+
+        anggotaForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const payload = {
+                nama: document.getElementById('anggota_nama').value,
+                jabatan: document.getElementById('anggota_jabatan').value,
+                divisi: document.getElementById('anggota_divisi').value,
+                email: document.getElementById('anggota_email').value
+            };
+            const { error } = await supabaseClient.from(TABLE_NAME_ANGGOTA).insert([payload]);
+            if (!error) { anggotaForm.reset(); fetchAnggota(); }
+        };
+
+        alumniForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const payload = { nama: document.getElementById('alumni_nama').value, angkatan: document.getElementById('alumni_angkatan').value };
+            const { error } = await supabaseClient.from(TABLE_NAME_ALUMNI).insert([payload]);
+            if (!error) { alumniForm.reset(); fetchAlumni(); }
+        };
+
+        // --- EDIT MODAL LOGIC ---
+        window.openEditModal = (type, data) => {
+            if (type === 'paper') {
+                document.getElementById('edit-id-paper').value = data.id;
+                document.getElementById('edit-title-display-paper').textContent = data.title;
+                document.getElementById('edit-status-paper').value = data.status;
+                editModal.classList.remove('hidden');
+            } else if (type === 'materi') {
+                document.getElementById('edit-id-materi').value = data.id;
+                document.getElementById('edit-judul_materi').value = data.judul_materi;
+                editMateriModal.classList.remove('hidden');
+            } else if (type === 'anggota') {
+                document.getElementById('edit-id-anggota').value = data.id;
+                document.getElementById('edit-anggota_nama').value = data.nama;
+                populateSelect(document.getElementById('edit-anggota_jabatan'), JABATAN_OPTIONS, data.jabatan);
+                populateSelect(document.getElementById('edit-anggota_divisi'), DIVISI_OPTIONS, data.divisi);
+                editAnggotaModal.classList.remove('hidden');
+            } else if (type === 'alumni') {
+                document.getElementById('edit-id-alumni').value = data.id;
+                document.getElementById('edit-alumni_nama').value = data.nama;
+                editAlumniModal.classList.remove('hidden');
+            }
+            lucide.createIcons();
+        };
+
+        window.closeEditModal = (type) => {
+            if (type === 'paper') editModal.classList.add('hidden');
+            if (type === 'materi') editMateriModal.classList.add('hidden');
+            if (type === 'anggota') editAnggotaModal.classList.add('hidden');
+            if (type === 'alumni') editAlumniModal.classList.add('hidden');
+        };
+
+        function getStatusBadge(status) {
+            let color = status === 'Accepted' ? 'bg-green-100 text-green-800' : status === 'Rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800';
+            return `<span class="px-2 py-1 rounded-full text-xs font-bold ${color}">${status}</span>`;
+        }
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            submitPaperButton.innerHTML = renderButtonContent('Tambah Paper');
+            submitMateriButton.innerHTML = renderButtonContent('Tambah Materi', 'folder-plus');
+            submitAnggotaButton.innerHTML = renderButtonContent('Tambah Anggota', 'user-plus');
+            submitAlumniButton.innerHTML = renderButtonContent('Tambah Alumni', 'briefcase-business');
+
+            populateSelect(document.getElementById('anggota_jabatan'), JABATAN_OPTIONS);
+            populateSelect(document.getElementById('anggota_divisi'), DIVISI_OPTIONS);
+
+            checkSession();
+            lucide.createIcons();
+        });
 
     </script>
 </body>
