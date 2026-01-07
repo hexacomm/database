@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Data Hexacomm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            min-height: 100vh;
+        }
+        
+        /* Navigasi */
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background-color: #F0E68C;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-item-inactive:hover {
+            background-color: #FFEB3B;
+            transform: translateX(5px);
+        }
+
+        .nav-item-active {
+            background-color: #FFD700;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+
+        .nav-text {
+            font-weight: 600;
+            margin-left: 0.75rem;
+        }
+
+        .main-page-header {
+            @apply bg-white p-6 rounded-2xl shadow-sm border-l-8 border-yellow-500 mb-6;
+        }
+
+        .view-background-texture {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin-fast { animation: spin 0.6s linear infinite; }
+    </style>
+</head>
+<body class="flex flex-col">
+
+    <!-- LOGIN SECTION -->
+    <div id="loginSection" class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-4xl flex flex-col md:flex-row rounded-3xl shadow-2xl overflow-hidden bg-white">
+            <div class="md:w-1/2 bg-yellow-50 p-12 flex flex-col justify-center items-center text-center">
+                <img id="loginLogo" src="https://raw.githubusercontent.com/fitrasadli/pantaupaper/main/Logo%20Hexacomm.png" 
+                     class="w-32 mb-6" alt="Logo" onerror="this.src='https://placehold.co/150?text=Hexa'">
+                <h2 class="text-3xl font-extrabold text-yellow-800">Hexacomm RnD</h2>
+                <p class="text-gray-600 mt-2">Sistem Manajemen Data Terpadu</p>
+            </div>
+            <div class="md:w-1/2 p-10">
+                <h1 class="text-2xl font-bold text-gray-800 mb-6">Silakan Masuk</h1>
+                <form id="loginForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Username</label>
+                        <input type="text" id="username" required class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Password</label>
+                        <input type="password" id="password" required class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none">
+                    </div>
+                    <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-xl transition shadow-lg">Masuk</button>
+                    <p id="loginError" class="text-red-500 text-sm text-center hidden"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP SECTION -->
+    <div id="appSection" class="hidden flex-grow flex flex-col lg:flex-row p-4 lg:p-8 gap-8">
+        
+        <!-- SIDEBAR -->
+        <aside class="w-full lg:w-72 bg-white p-6 rounded-2xl shadow-md h-fit">
+            <div class="flex items-center gap-3 mb-8 border-b pb-4">
+                <img src="https://raw.githubusercontent.com/fitrasadli/pantaupaper/main/Logo%20Hexacomm.png" class="w-10 h-10 object-contain" alt="H">
+                <span class="text-xl font-bold text-yellow-700">Hexa Portal</span>
+            </div>
+            <nav id="mainNav">
+                <div class="nav-item nav-item-active" data-view="paper"><i data-lucide="file-text"></i><span class="nav-text">Paper</span></div>
+                <div class="nav-item nav-item-inactive" data-view="materi"><i data-lucide="folder-tree"></i><span class="nav-text">Materi</span></div>
+                <div class="nav-item nav-item-inactive" data-view="anggota"><i data-lucide="users"></i><span class="nav-text">Anggota</span></div>
+                <div class="nav-item nav-item-inactive" data-view="alumni"><i data-lucide="graduation-cap"></i><span class="nav-text">Alumni</span></div>
+            </nav>
+            <button id="logoutButton" class="w-full mt-8 bg-red-50 hover:bg-red-100 text-red-600 font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition">
+                <i data-lucide="log-out" class="w-4 h-4"></i> Keluar
+            </button>
+        </aside>
+
+        <!-- CONTENT AREA -->
+        <main class="flex-grow">
+            <!-- PAPER VIEW -->
+            <div id="paperView" class="view-content">
+                <div class="main-page-header">
+                    <h1 class="text-2xl font-bold text-gray-800">Manajemen Paper</h1>
+                </div>
+                <div class="admin-only bg-white p-6 rounded-2xl shadow-sm mb-6 hidden">
+                    <h2 class="font-bold text-yellow-700 mb-4">Tambah Paper</h2>
+                    <form id="paperForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <input type="text" id="p_title" placeholder="Judul Paper" class="p-3 border rounded-lg col-span-2" required>
+                        <input type="text" id="p_authors" placeholder="Penulis" class="p-3 border rounded-lg">
+                        <select id="p_status" class="p-3 border rounded-lg">
+                            <option value="Draft">Draft</option>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Accepted">Accepted</option>
+                        </select>
+                        <input type="text" id="p_cat" placeholder="Kategori" class="p-3 border rounded-lg">
+                        <button type="submit" class="bg-yellow-600 text-white p-3 rounded-lg font-bold">Simpan</button>
+                    </form>
+                </div>
+                <div class="view-background-texture">
+                    <input type="text" id="s_paper" placeholder="Cari paper..." class="w-full p-3 border rounded-xl mb-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50 border-b">
+                                <tr>
+                                    <th class="p-4">Judul</th>
+                                    <th class="p-4">Penulis</th>
+                                    <th class="p-4">Status</th>
+                                    <th class="p-4">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paperList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MATERI VIEW -->
+            <div id="materiView" class="view-content hidden">
+                <div class="main-page-header"><h1 class="text-2xl font-bold">Manajemen Materi</h1></div>
+                <div class="admin-only bg-white p-6 rounded-2xl shadow-sm mb-6 hidden">
+                    <form id="materiForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <input type="text" id="m_judul" placeholder="Judul Materi" class="p-3 border rounded-lg col-span-2" required>
+                        <select id="m_divisi" class="p-3 border rounded-lg">
+                            <option value="5G">5G</option>
+                            <option value="IoT">IoT</option>
+                            <option value="Umum">Umum</option>
+                        </select>
+                        <input type="url" id="m_link" placeholder="Link GDrive" class="p-3 border rounded-lg" required>
+                        <button type="submit" class="bg-yellow-600 text-white p-3 rounded-lg font-bold">Tambah</button>
+                    </form>
+                </div>
+                <div class="view-background-texture">
+                    <tbody id="materiList"></tbody>
+                    <div id="materiContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+            </div>
+
+            <!-- ANGGOTA VIEW -->
+            <div id="anggotaView" class="view-content hidden">
+                <div class="main-page-header"><h1 class="text-2xl font-bold">Data Anggota Aktif</h1></div>
+                <div class="admin-only bg-white p-6 rounded-2xl shadow-sm mb-6 hidden">
+                    <form id="anggotaForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <input type="text" id="a_nama" placeholder="Nama" class="p-3 border rounded-lg" required>
+                        <input type="text" id="a_batch" placeholder="Batch" class="p-3 border rounded-lg">
+                        <select id="a_divisi" class="p-3 border rounded-lg">
+                            <option value="5G">5G</option>
+                            <option value="IoT">IoT</option>
+                        </select>
+                        <button type="submit" class="bg-yellow-600 text-white p-3 rounded-lg font-bold">Tambah Anggota</button>
+                    </form>
+                </div>
+                <div class="view-background-texture">
+                    <div id="anggotaList" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+                </div>
+            </div>
+
+            <!-- ALUMNI VIEW -->
+            <div id="alumniView" class="view-content hidden">
+                <div class="main-page-header"><h1 class="text-2xl font-bold">Database Alumni</h1></div>
+                <div class="view-background-texture">
+                    <div id="alumniList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL EDIT GENERIC -->
+    <div id="editModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modalTitle" class="text-xl font-bold mb-4">Edit Data</h3>
+            <div id="modalBody"></div>
+            <div class="flex justify-end gap-2 mt-6">
+                <button onclick="closeModal()" class="px-4 py-2 border rounded-lg">Batal</button>
+                <button id="saveBtn" class="px-4 py-2 bg-yellow-600 text-white rounded-lg">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // CONFIG
+        const SB_URL = 'https://wqqqilascgnntonwswha.supabase.co';
+        const SB_KEY = 'sb_publishable_dvGcqxfy3CtBypmOm0g5eQ__nMm3ghP';
+        const client = supabase.createClient(SB_URL, SB_KEY);
+
+        // STATE
+        let currentUser = null;
+
+        // AUTH
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            const errEl = document.getElementById('loginError');
+
+            const { data, error } = await client.from('users').select('*').eq('username', u).eq('password', p).maybeSingle();
+            
+            if (data) {
+                currentUser = data;
+                sessionStorage.setItem('hex_user', JSON.stringify(data));
+                initApp();
+            } else {
+                errEl.innerText = "Kredensial salah atau user tidak ditemukan.";
+                errEl.classList.remove('hidden');
+            }
+        });
+
+        function initApp() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('appSection').classList.remove('hidden');
+            
+            if (currentUser.role === 'admin') {
+                document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+            }
+
+            switchView('paper');
+            lucide.createIcons();
+        }
+
+        // NAVIGATION
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => switchView(item.dataset.view));
+        });
+
+        function switchView(view) {
+            document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(n => {
+                n.classList.replace('nav-item-active', 'nav-item-inactive');
+            });
+            
+            document.getElementById(view + 'View').classList.remove('hidden');
+            document.querySelector(`[data-view="${view}"]`).classList.replace('nav-item-inactive', 'nav-item-active');
+            
+            if (view === 'paper') fetchPapers();
+            if (view === 'materi') fetchMateri();
+            if (view === 'anggota') fetchAnggota();
+            if (view === 'alumni') fetchAlumni();
+        }
+
+        // PAPER LOGIC
+        async function fetchPapers() {
+            const list = document.getElementById('paperList');
+            list.innerHTML = '<tr><td colspan="4" class="p-4 text-center">Memuat...</td></tr>';
+            const { data } = await client.from('papers').select('*').order('created_at', { ascending: false });
+            
+            list.innerHTML = data.map(p => `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="p-4 font-semibold">${p.title}</td>
+                    <td class="p-4">${p.authors || '-'}</td>
+                    <td class="p-4"><span class="px-2 py-1 bg-yellow-100 text-xs rounded-full font-bold">${p.status}</span></td>
+                    <td class="p-4">
+                        ${currentUser.role === 'admin' ? `<button onclick="deleteData('papers', '${p.id}', fetchPapers)" class="text-red-500 mr-2">Hapus</button>` : ''}
+                        <a href="${p.overleaf_link || '#'}" target="_blank" class="text-blue-500">Buka</a>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        document.getElementById('paperForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                title: document.getElementById('p_title').value,
+                authors: document.getElementById('p_authors').value,
+                status: document.getElementById('p_status').value,
+                category: document.getElementById('p_cat').value
+            };
+            await client.from('papers').insert([payload]);
+            e.target.reset();
+            fetchPapers();
+        });
+
+        // MATERI LOGIC
+        async function fetchMateri() {
+            const container = document.getElementById('materiContainer');
+            const { data } = await client.from('materi').select('*').order('created_at', { ascending: false });
+            container.innerHTML = data.map(m => `
+                <div class="p-4 bg-gray-50 rounded-xl border flex justify-between items-center">
+                    <div>
+                        <div class="text-xs font-bold text-yellow-600 uppercase">${m.divisi}</div>
+                        <div class="font-bold">${m.judul_materi}</div>
+                    </div>
+                    <a href="${m.link_materi}" target="_blank" class="p-2 bg-white rounded-lg shadow-sm">
+                        <i data-lucide="external-link" class="w-4 h-4 text-gray-600"></i>
+                    </a>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        document.getElementById('materiForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                judul_materi: document.getElementById('m_judul').value,
+                divisi: document.getElementById('m_divisi').value,
+                link_materi: document.getElementById('m_link').value
+            };
+            await client.from('materi').insert([payload]);
+            e.target.reset();
+            fetchMateri();
+        });
+
+        // ANGGOTA LOGIC
+        async function fetchAnggota() {
+            const list = document.getElementById('anggotaList');
+            const { data } = await client.from('anggota_hexacomm').select('*').order('nama');
+            list.innerHTML = data.map(a => `
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-yellow-100">
+                    <div class="font-bold text-lg">${a.nama}</div>
+                    <div class="text-sm text-gray-500">${a.jabatan || 'Anggota'} - ${a.divisi}</div>
+                    <div class="mt-2 text-xs text-gray-400">Batch: ${a.batch || '-'} | Angkatan: ${a.angkatan || '-'}</div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('anggotaForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                nama: document.getElementById('a_nama').value,
+                batch: document.getElementById('a_batch').value,
+                divisi: document.getElementById('a_divisi').value,
+                jabatan: 'Staff'
+            };
+            await client.from('anggota_hexacomm').insert([payload]);
+            e.target.reset();
+            fetchAnggota();
+        });
+
+        // ALUMNI LOGIC
+        async function fetchAlumni() {
+            const list = document.getElementById('alumniList');
+            const { data } = await client.from('alumni').select('*').order('angkatan', { ascending: false });
+            list.innerHTML = data.map(a => `
+                <div class="p-4 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+                    <div class="font-bold">${a.nama}</div>
+                    <div class="text-xs text-gray-500">${a.tempat_kerja || 'Mencari Karir'}</div>
+                    <div class="mt-1 text-xs font-semibold text-yellow-600">Lulusan ${a.angkatan}</div>
+                </div>
+            `).join('');
+        }
+
+        // UTILS
+        async function deleteData(table, id, callback) {
+            if (!confirm('Hapus data ini?')) return;
+            await client.from(table).delete().eq('id', id);
+            callback();
+        }
+
+        document.getElementById('logoutButton').onclick = () => {
+            sessionStorage.clear();
+            location.reload();
+        };
+
+        // Modal Logic
+        function closeModal() { document.getElementById('editModal').classList.add('hidden'); }
+
+        // Initial Session Check
+        window.onload = () => {
+            const saved = sessionStorage.getItem('hex_user');
+            if (saved) {
+                currentUser = JSON.parse(saved);
+                initApp();
+            }
+        };
+
+    </script>
+</body>
+</html>
