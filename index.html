@@ -7,7 +7,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom Styles */
+        /* Custom Styles dari kode yang Anda berikan */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         
         body {
@@ -75,6 +75,7 @@
             color: #B8860B;
         }
 
+        /* Additional styling */
         #mainNav {
             margin-top: 20px;
         }
@@ -143,6 +144,7 @@
             position: relative;
         }
 
+        /* Gaya untuk badge CV */
         .cv-link-cell {
             @apply flex items-center justify-center space-x-1;
             padding-top: 0.5rem;
@@ -159,6 +161,7 @@
              @apply text-gray-400;
         }
 
+        /* BARU: Gaya untuk kontak yang lebih rapi di tabel */
         .contact-entry {
             @apply flex items-center space-x-1 text-xs px-2 py-1 bg-blue-50 text-blue-800 rounded-lg;
             margin-bottom: 2px;
@@ -172,14 +175,14 @@
 
     <!-- BAGIAN 1: LOGIN SECTION -->
     <div id="loginSection" class="flex-grow flex items-center justify-center">
-        <div class="w-full max-w-sm md:max-w-4xl lg:max-w-5xl flex rounded-2xl shadow-2xl overflow-hidden mx-4 text-center md:text-left">
+        <div class="w-full max-w-sm md:max-w-4xl lg:max-w-5xl flex rounded-2xl shadow-2xl overflow-hidden mx-4">
             
             <!-- Left Side: Visual/Logo -->
             <div id="visual-side" class="hidden md:block md:w-1/2 p-12 relative flex flex-col justify-center items-center">
                 <div class="text-center">
                     <img id="loginLogo" 
                         class="max-w-[150px] h-auto mx-auto mb-4 p-3 rounded-xl shadow-lg object-contain border border-yellow-100" 
-                        src="https://raw.githubusercontent.com/fitrasadli/pantaupaper/main/Logo%20Hexacomm.png" 
+                        src="" 
                         alt="Logo Hexacomm.png"
                         onerror="this.onerror=null; this.src='https://placehold.co/150x150/fde047/78350f?text=Hexa';">
 
@@ -202,12 +205,12 @@
 
                 <form id="loginForm" class="space-y-6">
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="username">Username</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username</label>
                         <input type="text" id="username" placeholder="Masukkan username" required
                             class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
                     </div>
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="password">Password</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
                         <input type="password" id="password" placeholder="Masukkan password" required
                             class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
                     </div>
@@ -222,17 +225,25 @@
         </div>
     </div>
 
-    <!-- BAGIAN 2: APLIKASI UTAMA -->
+    <!-- BAGIAN 2: APLIKASI UTAMA (Diperbarui dengan Sidebar) -->
     <div id="appSection" class="hidden flex-grow flex p-4 md:p-8">
         <div class="container mx-auto flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8">
             
+            <!-- HEADER APLIKASI UTAMA (Pindah ke sini) -->
+            <div class="absolute top-4 right-4 z-10">
+                <button id="logoutButton" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm font-semibold transition shadow flex items-center justify-center space-x-1">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+
             <!-- SIDEBAR NAVIGASI -->
-            <aside class="w-full lg:w-64 bg-white p-6 rounded-xl shadow-lg flex-shrink-0 relative">
+            <aside class="w-full lg:w-64 bg-white p-6 rounded-xl shadow-lg flex-shrink-0">
                 <div class="flex flex-col mb-8 border-b pb-4">
                     <div class="flex items-center text-xl font-bold text-gray-800 mb-4">
                         <img id="headerLogo" 
                             class="w-8 h-8 mr-2 object-contain rounded-md" 
-                            src="https://raw.githubusercontent.com/fitrasadli/pantaupaper/main/Logo%20Hexacomm.png" 
+                            src="" 
                             alt="Logo"
                             onerror="this.onerror=null; this.src='https://placehold.co/32x32/fde047/78350f?text=H';">
                         <span class="text-yellow-600">Hexa RnD</span>
@@ -240,6 +251,7 @@
                 </div>
 
                 <nav id="mainNav" class="space-y-2">
+                    <!-- Menu Existing -->
                     <div id="nav-paper" class="nav-item nav-item-active" data-view="paper">
                         <i data-lucide="file-text" class="w-5 h-5 mr-3"></i>
                         <span class="nav-text">Manajemen Paper</span>
@@ -248,28 +260,23 @@
                         <i data-lucide="folder-tree" class="w-5 h-5 mr-3"></i>
                         <span class="nav-text">Manajemen Materi</span>
                     </div>
+                    <!-- Menu BARU: Anggota -->
                     <div id="nav-anggota" class="nav-item nav-item-inactive" data-view="anggota">
                         <i data-lucide="users" class="w-5 h-5 mr-3"></i>
                         <span class="nav-text">Data Anggota</span>
                     </div>
+                    <!-- Menu BARU: Alumni -->
                     <div id="nav-alumni" class="nav-item nav-item-inactive" data-view="alumni">
                         <i data-lucide="graduation-cap" class="w-5 h-5 mr-3"></i>
                         <span class="nav-text">Data Alumni</span>
                     </div>
                 </nav>
-
-                <div class="mt-10 pt-10 border-t">
-                    <button id="logoutButton" class="w-full bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm font-semibold transition shadow flex items-center justify-center space-x-1">
-                        <i data-lucide="log-out" class="w-4 h-4"></i>
-                        <span>Logout</span>
-                    </button>
-                </div>
             </aside>
             
             <!-- KONTEN UTAMA -->
             <main id="mainContent" class="flex-grow w-full">
                 
-                <!-- VIEW 1: MANAJEMEN PAPER -->
+                <!-- VIEW 1: MANAJEMEN PAPER (EXISTING) -->
                 <div id="paperView" class="view-content hidden space-y-4">
                     <div class="main-page-header">
                         <h1 class="text-3xl font-bold text-gray-800 flex items-center p-0">
@@ -280,6 +287,7 @@
                     </div>
 
                     <div class="view-background-texture space-y-8 p-6">
+                    
                         <!-- Form Tambah Paper -->
                         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border-t-4 border-yellow-500">
                             <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
@@ -318,14 +326,18 @@
                             </form>
                         </div>
 
-                        <!-- Daftar Paper -->
+                        <!-- Bagian Pencarian dan Daftar Paper -->
                         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
                             <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
                                 <i data-lucide="list-checks" class="w-6 h-6"></i>
                                 <span>Daftar Paper</span>
                             </h2>
+                            
+                            <!-- Input Pencarian -->
                             <input type="text" id="searchPaper" placeholder="Cari berdasarkan Judul atau Penulis..."
                                 class="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+
+                            <!-- Tabel Paper -->
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
@@ -348,7 +360,9 @@
                                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="papersList" class="bg-white divide-y divide-gray-200"></tbody>
+                                    <tbody id="papersList" class="bg-white divide-y divide-gray-200">
+                                        <!-- Data paper akan dimasukkan di sini oleh JavaScript -->
+                                    </tbody>
                                 </table>
                                 <p id="noPaperDataMessage" class="hidden p-4 text-center text-gray-500 mt-4">Tidak ada paper yang ditemukan.</p>
                             </div>
@@ -356,7 +370,7 @@
                     </div>
                 </div>
 
-                <!-- VIEW 2: MANAJEMEN MATERI -->
+                <!-- VIEW 2: MANAJEMEN MATERI (EXISTING) -->
                 <div id="materiView" class="view-content hidden space-y-4">
                     <div class="main-page-header">
                         <h1 class="text-3xl font-bold text-gray-800 flex items-center p-0">
@@ -367,13 +381,16 @@
                     </div>
 
                     <div class="view-background-texture space-y-8 p-6">
+                        
+                        <!-- Form Tambah Materi -->
                         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border-t-4 border-yellow-500">
                             <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
                                 <i data-lucide="folder-plus" class="w-6 h-6"></i>
                                 <span>Tambah Materi Baru</span>
                             </h2>
                             <form id="materiForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <select id="divisi" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                                <select id="divisi" required
+                                    class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                                     <option value="" disabled selected>Pilih Divisi (Wajib)</option>
                                     <option value="5G">5G</option>
                                     <option value="IoT">IoT</option>
@@ -381,25 +398,34 @@
                                 </select>
                                 <input type="text" id="judul_materi" placeholder="Judul Materi (Wajib)" required
                                     class="col-span-1 md:col-span-2 p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
-                                <input type="text" id="pembuat" placeholder="Nama Pembuat" class="p-3 border border-gray-300 rounded-lg">
-                                <input type="date" id="tanggal_jadi" placeholder="Tanggal Jadi" class="p-3 border border-gray-300 rounded-lg">
-                                <input type="url" id="link_materi" placeholder="Link Materi (URL Wajib)" required class="p-3 border border-gray-300 rounded-lg">
-                                <input type="url" id="ppt_link_materi" placeholder="Link PPT/Slide (Opsional)" class="p-3 border border-gray-300 rounded-lg">
+                                <input type="text" id="pembuat" placeholder="Nama Pembuat"
+                                    class="p-3 border border-gray-300 rounded-lg">
+                                <input type="date" id="tanggal_jadi" placeholder="Tanggal Jadi"
+                                    class="p-3 border border-gray-300 rounded-lg">
+                                <input type="url" id="link_materi" placeholder="Link Materi (URL Wajib)" required
+                                    class="p-3 border border-gray-300 rounded-lg">
+                                <!-- INPUT BARU UNTUK LINK PPT -->
+                                <input type="url" id="ppt_link_materi" placeholder="Link PPT/Slide (Opsional)"
+                                    class="p-3 border border-gray-300 rounded-lg">
                                 
                                 <button type="submit" id="submitMateriButton"
-                                    class="col-span-1 md:col-span-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-xl transition duration-300 shadow-xl shadow-yellow-400/50 disabled:opacity-50 flex items-center justify-center space-x-2">
+                                    class="col-span-1 md:col-span-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-xl transition duration-300 shadow-xl shadow-yellow-400/50 hover:shadow-2xl hover:shadow-yellow-500/70 disabled:opacity-50 flex items-center justify-center space-x-2">
                                 </button>
                                 <p id="formMateriMessage" class="col-span-3 text-sm text-center hidden"></p>
                             </form>
                         </div>
 
+                        <!-- Bagian Pencarian dan Daftar Materi -->
                         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
                             <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
                                 <i data-lucide="list" class="w-6 h-6"></i>
                                 <span>Daftar Materi</span>
                             </h2>
+                               <!-- Input Pencarian Materi -->
                             <input type="text" id="searchMateri" placeholder="Cari berdasarkan Judul atau Pembuat..."
                                 class="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+
+                            <!-- Tabel Materi -->
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
@@ -419,7 +445,9 @@
                                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="materiList" class="bg-white divide-y divide-gray-200"></tbody>
+                                    <tbody id="materiList" class="bg-white divide-y divide-gray-200">
+                                        <!-- Data materi akan dimasukkan di sini oleh JavaScript -->
+                                    </tbody>
                                 </table>
                                 <p id="noMateriDataMessage" class="hidden p-4 text-center text-gray-500 mt-4">Tidak ada materi yang ditemukan.</p>
                             </div>
@@ -427,7 +455,7 @@
                     </div>
                 </div>
 
-                <!-- VIEW 3: MANAJEMEN ANGGOTA -->
+                <!-- VIEW 3: MANAJEMEN ANGGOTA (BARU) -->
                 <div id="anggotaView" class="view-content hidden space-y-4">
                     <div class="main-page-header">
                         <h1 class="text-3xl font-bold text-gray-800 flex items-center p-0">
@@ -438,6 +466,8 @@
                     </div>
 
                     <div class="view-background-texture space-y-8 p-6">
+                        
+                        <!-- Form Tambah Anggota -->
                         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border-t-4 border-yellow-500">
                             <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
                                 <i data-lucide="user-plus" class="w-6 h-6"></i>
@@ -447,12 +477,17 @@
                                 <input type="text" id="anggota_nama" placeholder="Nama Lengkap (Wajib)" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                                 <input type="text" id="anggota_batch" placeholder="Batch (Ex: B1)" class="p-3 border border-gray-300 rounded-lg">
                                 <input type="number" id="anggota_angkatan" placeholder="Angkatan (Ex: 2021)" min="2010" max="2100" class="p-3 border border-gray-300 rounded-lg">
+                                
+                                <!-- Jabatan -->
                                 <select id="anggota_jabatan" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                                     <option value="" disabled selected>Pilih Jabatan (Wajib)</option>
                                 </select>
+
+                                <!-- Divisi -->
                                 <select id="anggota_divisi" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                                     <option value="" disabled selected>Pilih Divisi (Wajib)</option>
                                 </select>
+                                
                                 <input type="email" id="anggota_email" placeholder="Email (Wajib)" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                                 <input type="tel" id="anggota_no_handphone" placeholder="No. Handphone" class="p-3 border border-gray-300 rounded-lg">
                                 <input type="date" id="anggota_tanggal_lahir" placeholder="Tanggal Lahir" class="p-3 border border-gray-300 rounded-lg">
@@ -466,6 +501,7 @@
                             </form>
                         </div>
 
+                        <!-- Bagian Pencarian dan Daftar Anggota -->
                         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
                             <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
                                 <i data-lucide="list-video" class="w-6 h-6"></i>
@@ -473,6 +509,8 @@
                             </h2>
                             <input type="text" id="searchAnggota" placeholder="Cari berdasarkan Nama, Jabatan, atau Divisi..."
                                 class="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+
+                            <!-- Tabel Anggota -->
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200 min-w-max">
                                     <thead class="bg-gray-50">
@@ -490,7 +528,9 @@
                                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="anggotaList" class="bg-white divide-y divide-gray-200"></tbody>
+                                    <tbody id="anggotaList" class="bg-white divide-y divide-gray-200">
+                                        <!-- Data anggota akan dimasukkan di sini oleh JavaScript -->
+                                    </tbody>
                                 </table>
                                 <p id="noAnggotaDataMessage" class="hidden p-4 text-center text-gray-500 mt-4">Tidak ada anggota yang ditemukan.</p>
                             </div>
@@ -498,7 +538,7 @@
                     </div>
                 </div>
 
-                <!-- VIEW 4: MANAJEMEN ALUMNI -->
+                <!-- VIEW 4: MANAJEMEN ALUMNI (BARU) -->
                 <div id="alumniView" class="view-content hidden space-y-4">
                     <div class="main-page-header">
                         <h1 class="text-3xl font-bold text-gray-800 flex items-center p-0">
@@ -509,6 +549,8 @@
                     </div>
 
                     <div class="view-background-texture space-y-8 p-6">
+                        
+                        <!-- Form Tambah Alumni -->
                         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl border-t-4 border-yellow-500">
                             <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
                                 <i data-lucide="briefcase-business" class="w-6 h-6"></i>
@@ -531,6 +573,7 @@
                             </form>
                         </div>
 
+                        <!-- Bagian Pencarian dan Daftar Alumni -->
                         <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
                             <h2 class="text-2xl font-semibold text-yellow-700 mb-4 flex items-center space-x-2">
                                 <i data-lucide="users-round" class="w-6 h-6"></i>
@@ -538,6 +581,8 @@
                             </h2>
                             <input type="text" id="searchAlumni" placeholder="Cari berdasarkan Nama, Tempat Kerja, atau Bidang..."
                                 class="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+
+                            <!-- Tabel Alumni -->
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200 min-w-max">
                                     <thead class="bg-gray-50">
@@ -553,20 +598,23 @@
                                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="alumniList" class="bg-white divide-y divide-gray-200"></tbody>
+                                    <tbody id="alumniList" class="bg-white divide-y divide-gray-200">
+                                        <!-- Data alumni akan dimasukkan di sini oleh JavaScript -->
+                                    </tbody>
                                 </table>
                                 <p id="noAlumniDataMessage" class="hidden p-4 text-center text-gray-500 mt-4">Tidak ada alumni yang ditemukan.</p>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </main>
         </div>
     </div>
 
-    <!-- MODALS -->
+    <!-- MODALS (Paper dan Materi Existing, Anggota dan Alumni Baru) -->
     
-    <!-- MODAL EDIT PAPER -->
+    <!-- MODAL EDIT PAPER (EXISTING) -->
     <div id="editModal" class="modal-overlay hidden">
         <div class="modal-content">
             <h3 class="text-2xl font-bold text-yellow-700 mb-4 flex items-center space-x-2 border-b pb-2">
@@ -578,6 +626,7 @@
             </button>
             <form id="editPaperForm" class="space-y-4">
                 <input type="hidden" id="edit-id-paper">
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1">Judul Paper (ID)</label>
@@ -585,19 +634,25 @@
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-deadline-paper">Deadline</label>
-                        <input type="date" id="edit-deadline-paper" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                        <input type="date" id="edit-deadline-paper"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                     </div>
+
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-authors-paper">Penulis</label>
-                        <input type="text" id="edit-authors-paper" placeholder="Nama Penulis" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                        <input type="text" id="edit-authors-paper" placeholder="Nama Penulis (Pisahkan dengan koma)"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-reference_link-paper">Link Referensi</label>
-                        <input type="url" id="edit-reference_link-paper" placeholder="Link Referensi" class="w-full p-3 border border-gray-300 rounded-lg">
+                        <input type="url" id="edit-reference_link-paper" placeholder="Link Referensi (URL)"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                     </div>
+
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-status-paper">Status (Wajib)</label>
-                        <select id="edit-status-paper" required class="w-full p-3 border border-gray-300 rounded-lg">
+                        <select id="edit-status-paper" required
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                             <option value="Draft">Draft</option>
                             <option value="Submitted">Submitted</option>
                             <option value="Under Review">Under Review</option>
@@ -607,26 +662,33 @@
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-overleaf_link-paper">Link Overleaf</label>
-                        <input type="url" id="edit-overleaf_link-paper" placeholder="Link Overleaf" class="w-full p-3 border border-gray-300 rounded-lg">
+                        <input type="url" id="edit-overleaf_link-paper" placeholder="Link Overleaf (URL)"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                     </div>
+
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-category-paper">Kategori</label>
-                        <input type="text" id="edit-category-paper" placeholder="Kategori" class="w-full p-3 border border-gray-300 rounded-lg">
+                        <input type="text" id="edit-category-paper" placeholder="Kategori (Jurnal/Konferensi/Lainnya)"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-ppt_link-paper">Link PPT/Slide</label>
-                        <input type="url" id="edit-ppt_link-paper" placeholder="Link PPT" class="w-full p-3 border border-gray-300 rounded-lg">
+                        <input type="url" id="edit-ppt_link-paper" placeholder="Link PPT/Slide (URL)"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                     </div>
                 </div>
+
                 <p id="editFormPaperMessage" class="text-sm text-center font-semibold hidden"></p>
-                <button type="submit" id="saveEditPaperButton" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md disabled:opacity-50 flex items-center justify-center space-x-2">
+
+                <button type="submit" id="saveEditPaperButton"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md disabled:opacity-50 flex items-center justify-center space-x-2">
                     <i data-lucide="check" class="w-5 h-5"></i> <span>Simpan Perubahan</span>
                 </button>
             </form>
         </div>
     </div>
     
-    <!-- MODAL EDIT MATERI -->
+    <!-- MODAL EDIT MATERI (EXISTING) -->
     <div id="editMateriModal" class="modal-overlay hidden">
         <div class="modal-content">
             <h3 class="text-2xl font-bold text-yellow-700 mb-4 flex items-center space-x-2 border-b pb-2">
@@ -638,45 +700,58 @@
             </button>
             <form id="editMateriForm" class="space-y-4">
                 <input type="hidden" id="edit-id-materi">
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1">Judul Materi</label>
-                        <input type="text" id="edit-judul_materi" required class="w-full p-3 border border-gray-300 rounded-lg">
+                        <input type="text" id="edit-judul_materi" placeholder="Judul Materi (Wajib)" required
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-divisi">Divisi (Wajib)</label>
-                        <select id="edit-divisi" required class="w-full p-3 border border-gray-300 rounded-lg">
+                        <select id="edit-divisi" required
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                             <option value="5G">5G</option>
                             <option value="IoT">IoT</option>
                             <option value="Umum">Umum</option>
                         </select>
                     </div>
+
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-pembuat">Pembuat</label>
-                        <input type="text" id="edit-pembuat" class="w-full p-3 border border-gray-300 rounded-lg">
+                        <input type="text" id="edit-pembuat" placeholder="Nama Pembuat"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-tanggal_jadi">Tanggal Jadi</label>
-                        <input type="date" id="edit-tanggal_jadi" class="w-full p-3 border border-gray-300 rounded-lg">
+                        <input type="date" id="edit-tanggal_jadi" placeholder="Tanggal Jadi"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                     </div>
                 </div>
+
+                <!-- Link Materi (Full width) -->
                 <div>
                     <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-link_materi">Link Materi (Wajib)</label>
-                    <input type="url" id="edit-link_materi" required class="w-full p-3 border border-gray-300 rounded-lg">
+                    <input type="url" id="edit-link_materi" placeholder="Link Materi (URL)" required
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                 </div>
                 <div>
                     <label class="block text-gray-700 text-sm font-bold mb-1" for="edit-ppt_link_materi">Link PPT/Slide</label>
-                    <input type="url" id="edit-ppt_link_materi" class="w-full p-3 border border-gray-300 rounded-lg">
+                    <input type="url" id="edit-ppt_link_materi" placeholder="Link PPT/Slide (URL)"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
                 </div>
+
                 <p id="editFormMateriMessage" class="text-sm text-center font-semibold hidden"></p>
-                <button type="submit" id="saveEditMateriButton" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md flex items-center justify-center space-x-2">
+
+                <button type="submit" id="saveEditMateriButton"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md disabled:opacity-50 flex items-center justify-center space-x-2">
                     <i data-lucide="check" class="w-5 h-5"></i> <span>Simpan Perubahan Materi</span>
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- MODAL EDIT ANGGOTA -->
+    <!-- MODAL EDIT ANGGOTA (BARU) -->
     <div id="editAnggotaModal" class="modal-overlay hidden">
         <div class="modal-content">
             <h3 class="text-2xl font-bold text-yellow-700 mb-4 flex items-center space-x-2 border-b pb-2">
@@ -688,27 +763,36 @@
             </button>
             <form id="editAnggotaForm" class="space-y-4">
                 <input type="hidden" id="edit-id-anggota">
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" id="edit-anggota_nama" placeholder="Nama Lengkap" required class="p-3 border rounded-lg">
-                    <input type="text" id="edit-anggota_batch" placeholder="Batch" class="p-3 border rounded-lg">
-                    <input type="number" id="edit-anggota_angkatan" placeholder="Angkatan" class="p-3 border rounded-lg">
-                    <select id="edit-anggota_jabatan" required class="p-3 border rounded-lg"></select>
-                    <select id="edit-anggota_divisi" required class="p-3 border rounded-lg"></select>
-                    <input type="email" id="edit-anggota_email" placeholder="Email" class="p-3 border rounded-lg">
-                    <input type="tel" id="edit-anggota_no_handphone" placeholder="No. HP" class="p-3 border rounded-lg">
-                    <input type="date" id="edit-anggota_tanggal_lahir" class="p-3 border rounded-lg">
-                    <input type="text" id="edit-anggota_organisasi_lain" placeholder="Organisasi Lain" class="p-3 border rounded-lg">
-                    <input type="url" id="edit-anggota_link_cv" placeholder="CV Link" class="col-span-1 md:col-span-2 p-3 border rounded-lg">
+                    <input type="text" id="edit-anggota_nama" placeholder="Nama Lengkap (Wajib)" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    <input type="text" id="edit-anggota_batch" placeholder="Batch (Ex: B1)" class="p-3 border border-gray-300 rounded-lg">
+                    <input type="number" id="edit-anggota_angkatan" placeholder="Angkatan (Ex: 2021)" min="2010" max="2100" class="p-3 border border-gray-300 rounded-lg">
+                    
+                    <select id="edit-anggota_jabatan" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    </select>
+                    <select id="edit-anggota_divisi" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    </select>
+                    
+                    <input type="email" id="edit-anggota_email" placeholder="Email" class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    <input type="tel" id="edit-anggota_no_handphone" placeholder="No. Handphone" class="p-3 border border-gray-300 rounded-lg">
+                    <input type="date" id="edit-anggota_tanggal_lahir" placeholder="Tanggal Lahir" class="p-3 border border-gray-300 rounded-lg">
+                    <input type="text" id="edit-anggota_organisasi_lain" placeholder="Organisasi Lain" class="p-3 border border-gray-300 rounded-lg">
+                    <input type="url" id="edit-anggota_link_cv" placeholder="Link CV/Portofolio (URL)" class="col-span-1 md:col-span-2 p-3 border border-gray-300 rounded-lg">
+
                 </div>
+
                 <p id="editFormAnggotaMessage" class="text-sm text-center font-semibold hidden"></p>
-                <button type="submit" id="saveEditAnggotaButton" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg flex items-center justify-center space-x-2">
-                    <i data-lucide="check" class="w-5 h-5"></i> <span>Simpan Perubahan</span>
+
+                <button type="submit" id="saveEditAnggotaButton"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md disabled:opacity-50 flex items-center justify-center space-x-2">
+                    <i data-lucide="check" class="w-5 h-5"></i> <span>Simpan Perubahan Anggota</span>
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- MODAL EDIT ALUMNI -->
+    <!-- MODAL EDIT ALUMNI (BARU) -->
     <div id="editAlumniModal" class="modal-overlay hidden">
         <div class="modal-content">
             <h3 class="text-2xl font-bold text-yellow-700 mb-4 flex items-center space-x-2 border-b pb-2">
@@ -720,19 +804,23 @@
             </button>
             <form id="editAlumniForm" class="space-y-4">
                 <input type="hidden" id="edit-id-alumni">
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" id="edit-alumni_nama" required class="p-3 border rounded-lg">
-                    <input type="text" id="edit-alumni_batch" class="p-3 border rounded-lg">
-                    <input type="number" id="edit-alumni_angkatan" class="p-3 border rounded-lg">
-                    <input type="text" id="edit-alumni_bidang" class="p-3 border rounded-lg">
-                    <input type="text" id="edit-alumni_tempat_kerja" class="p-3 border rounded-lg">
-                    <input type="tel" id="edit-alumni_no_handphone" class="p-3 border rounded-lg">
-                    <input type="email" id="edit-alumni_email" class="p-3 border rounded-lg">
-                    <input type="url" id="edit-alumni_link_cv" class="p-3 border rounded-lg">
+                    <input type="text" id="edit-alumni_nama" placeholder="Nama Lengkap (Wajib)" required class="p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    <input type="text" id="edit-alumni_batch" placeholder="Batch (Ex: B0)" class="p-3 border border-gray-300 rounded-lg">
+                    <input type="number" id="edit-alumni_angkatan" placeholder="Angkatan (Ex: 2020)" min="2010" max="2100" class="p-3 border border-gray-300 rounded-lg">
+                    <input type="text" id="edit-alumni_bidang" placeholder="Bidang/Jurusan" class="p-3 border border-gray-300 rounded-lg">
+                    <input type="text" id="edit-alumni_tempat_kerja" placeholder="Tempat Kerja Saat Ini" class="col-span-1 md:col-span-2 p-3 border border-gray-300 rounded-lg">
+                    <input type="tel" id="edit-alumni_no_handphone" placeholder="No. Handphone" class="p-3 border border-gray-300 rounded-lg">
+                    <input type="email" id="edit-alumni_email" placeholder="Email" class="p-3 border border-gray-300 rounded-lg">
+                    <input type="url" id="edit-alumni_link_cv" placeholder="Link CV/Portofolio (URL)" class="p-3 border border-gray-300 rounded-lg">
                 </div>
+
                 <p id="editFormAlumniMessage" class="text-sm text-center font-semibold hidden"></p>
-                <button type="submit" id="saveEditAlumniButton" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg flex items-center justify-center space-x-2">
-                    <i data-lucide="check" class="w-5 h-5"></i> <span>Simpan Perubahan</span>
+
+                <button type="submit" id="saveEditAlumniButton"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md disabled:opacity-50 flex items-center justify-center space-x-2">
+                    <i data-lucide="check" class="w-5 h-5"></i> <span>Simpan Perubahan Alumni</span>
                 </button>
             </form>
         </div>
@@ -745,19 +833,22 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
-        // --- KONFIGURASI SUPABASE ---
+        // --- KONFIGURASI ASET ---
+        const LOGO_URL = 'https://raw.githubusercontent.com/fitrasadli/pantaupaper/main/Logo%20Hexacomm.png'; 
+
+        // --- KONFIGURASI SUPABASE (UPDATED) ---
         const SUPABASE_URL = 'https://wqqqilascgnntonwswha.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_dvGcqxfy3CtBypmOm0g5eQ__nMm3ghP';
         
         const TABLE_NAME_PAPER = 'papers';
         const TABLE_NAME_MATERI = 'materi';
-        const TABLE_NAME_ANGGOTA = 'anggota_hexacomm';
-        const TABLE_NAME_ALUMNI = 'alumni';
+        const TABLE_NAME_ANGGOTA = 'anggota_hexacomm'; // BARU
+        const TABLE_NAME_ALUMNI = 'alumni'; // BARU
         const USER_TABLE_NAME = 'users';
 
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // --- PILIHAN DROPDOWN ---
+        // --- PILIHAN DROPDOWN (BARU) ---
         const JABATAN_OPTIONS = [
             "Ketua", "Wakil Ketua",
             "Koor Sekretaris", "Staff Sekretaris",
@@ -774,15 +865,17 @@
         const loginForm = document.getElementById('loginForm');
         const loginError = document.getElementById('loginError');
         const logoutButton = document.getElementById('logoutButton');
+        const loginLogo = document.getElementById('loginLogo');
+        const headerLogo = document.getElementById('headerLogo');
 
         // Navigasi & View
         const mainNav = document.getElementById('mainNav');
         const paperView = document.getElementById('paperView');
         const materiView = document.getElementById('materiView');
-        const anggotaView = document.getElementById('anggotaView');
-        const alumniView = document.getElementById('alumniView');
+        const anggotaView = document.getElementById('anggotaView'); // BARU
+        const alumniView = document.getElementById('alumniView'); // BARU
 
-        // Paper Elements
+        // Paper Elements (Existing)
         const papersList = document.getElementById('papersList');
         const paperForm = document.getElementById('paperForm');
         const searchPaperInput = document.getElementById('searchPaper');
@@ -794,7 +887,7 @@
         const editFormPaperMessage = document.getElementById('editFormPaperMessage');
         const saveEditPaperButton = document.getElementById('saveEditPaperButton');
 
-        // Materi Elements
+        // Materi Elements (Existing)
         const materiList = document.getElementById('materiList');
         const materiForm = document.getElementById('materiForm');
         const searchMateriInput = document.getElementById('searchMateri');
@@ -806,7 +899,7 @@
         const editFormMateriMessage = document.getElementById('editFormMateriMessage');
         const saveEditMateriButton = document.getElementById('saveEditMateriButton');
 
-        // Anggota Elements
+        // Anggota Elements (BARU)
         const anggotaList = document.getElementById('anggotaList');
         const anggotaForm = document.getElementById('anggotaForm');
         const searchAnggotaInput = document.getElementById('searchAnggota');
@@ -818,7 +911,7 @@
         const editFormAnggotaMessage = document.getElementById('editFormAnggotaMessage');
         const saveEditAnggotaButton = document.getElementById('saveEditAnggotaButton');
 
-        // Alumni Elements
+        // Alumni Elements (BARU)
         const alumniList = document.getElementById('alumniList');
         const alumniForm = document.getElementById('alumniForm');
         const searchAlumniInput = document.getElementById('searchAlumni');
@@ -830,33 +923,42 @@
         const editFormAlumniMessage = document.getElementById('editFormAlumniMessage');
         const saveEditAlumniButton = document.getElementById('saveEditAlumniButton');
 
+        // Status Sorting Global (Dipisahkan berdasarkan jenis)
         const sortState = {
             paper: { col: 'created_at', order: 'desc' },
             materi: { col: 'created_at', order: 'desc' },
-            anggota: { col: 'nama', order: 'asc' },
-            alumni: { col: 'angkatan', order: 'desc' }
+            anggota: { col: 'nama', order: 'asc' }, // Default sort by name
+            alumni: { col: 'angkatan', order: 'desc' } // Default sort by angkatan
         };
         
-        let currentActiveView = 'paper';
+        let currentActiveView = 'paper'; // Default view saat login
 
-        // --- ROLE PERMISSIONS ---
+        // --- ROLE PERMISSIONS (BARU) ---
         function applyPermissions() {
             const role = sessionStorage.getItem('userRole') || 'viewer';
-            const containers = [
-                paperForm ? paperForm.parentElement : null,
-                materiForm ? materiForm.parentElement : null,
-                anggotaForm ? anggotaForm.parentElement : null,
-                alumniForm ? alumniForm.parentElement : null
-            ];
+            
+            // Mencari container form (div dengan bg-white)
+            const paperContainer = paperForm ? paperForm.parentElement : null;
+            const materiContainer = materiForm ? materiForm.parentElement : null;
+            const anggotaContainer = anggotaForm ? anggotaForm.parentElement : null;
+            const alumniContainer = alumniForm ? alumniForm.parentElement : null;
+
+            const containers = [paperContainer, materiContainer, anggotaContainer, alumniContainer];
 
             if (role !== 'admin') {
-                containers.forEach(c => { if (c) c.classList.add('hidden'); });
+                // Sembunyikan form tambah data jika bukan admin
+                containers.forEach(c => {
+                    if (c) c.classList.add('hidden');
+                });
             } else {
-                containers.forEach(c => { if (c) c.classList.remove('hidden'); });
+                // Tampilkan jika dia admin
+                containers.forEach(c => {
+                    if (c) c.classList.remove('hidden');
+                });
             }
         }
 
-        // --- UTILITY ---
+        // --- LOGIKA UTILITY ---
         function renderButtonContent(text, icon = 'file-plus') {
             const spinClass = icon === 'loader-circle' ? 'animate-spin-fast' : '';
             return `<i data-lucide="${icon}" class="w-5 h-5 mr-2 ${spinClass}"></i> <span>${text}</span>`;
@@ -867,9 +969,12 @@
             element.textContent = message;
             element.className = `col-span-3 text-sm text-center font-semibold ${colorClass}`;
             element.classList.remove('hidden');
-            setTimeout(() => { element.classList.add('hidden'); }, 4000);
+            setTimeout(() => {
+                element.classList.add('hidden');
+            }, 4000);
         }
 
+        // Helper untuk mengisi dropdown
         function populateSelect(selectElement, options, currentValue = '') {
             if (!selectElement) return;
             selectElement.innerHTML = `<option value="" disabled ${currentValue ? '' : 'selected'}>Pilih...</option>`;
@@ -879,14 +984,24 @@
             });
         }
 
+
+        // --- LOGIKA NAVIGASI DAN VIEW --- 
+        
         function showView(viewName) {
             currentActiveView = viewName;
-            document.querySelectorAll('.view-content').forEach(view => view.classList.add('hidden'));
+            
+            // Sembunyikan semua view dan reset navigasi
+            document.querySelectorAll('.view-content').forEach(view => {
+                if (view) view.classList.add('hidden');
+            });
             document.querySelectorAll('.nav-item').forEach(nav => {
-                nav.classList.remove('nav-item-active');
-                nav.classList.add('nav-item-inactive');
+                if (nav) {
+                    nav.classList.remove('nav-item-active');
+                    nav.classList.add('nav-item-inactive');
+                }
             });
 
+            // Tampilkan view yang sesuai dan atur status navigasi
             const targetView = document.getElementById(`${viewName}View`);
             const targetNav = document.getElementById(`nav-${viewName}`);
 
@@ -896,25 +1011,38 @@
                 targetNav.classList.remove('nav-item-inactive');
             }
 
+            // Muat data untuk view yang aktif
             const getSearchTerm = (input) => input ? input.value : '';
 
-            if (viewName === 'paper') fetchPapers(getSearchTerm(searchPaperInput));
-            else if (viewName === 'materi') fetchMateri(getSearchTerm(searchMateriInput));
-            else if (viewName === 'anggota') fetchAnggota(getSearchTerm(searchAnggotaInput));
-            else if (viewName === 'alumni') fetchAlumni(getSearchTerm(searchAlumniInput));
-            lucide.createIcons();
+            if (viewName === 'paper') {
+                fetchPapers(getSearchTerm(searchPaperInput));
+            } else if (viewName === 'materi') {
+                fetchMateri(getSearchTerm(searchMateriInput));
+            } else if (viewName === 'anggota') { // BARU
+                fetchAnggota(getSearchTerm(searchAnggotaInput));
+            } else if (viewName === 'alumni') { // BARU
+                fetchAlumni(getSearchTerm(searchAlumniInput));
+            }
+            lucide.createIcons(); // Re-render icons
         }
         
         mainNav && mainNav.addEventListener('click', (e) => {
             const navItem = e.target.closest('.nav-item');
-            if (navItem) showView(navItem.getAttribute('data-view'));
+            if (navItem) {
+                const view = navItem.getAttribute('data-view');
+                showView(view);
+            }
         });
 
-        // --- SORTING ---
+        // --- LOGIKA SORTING HEADER ---
         function updateTableHeaders(type) {
-            document.querySelectorAll(`.sort-icon-wrapper.${type}`).forEach(wrapper => { wrapper.innerHTML = ''; });
+            document.querySelectorAll(`.sort-icon-wrapper.${type}`).forEach(wrapper => {
+                if (wrapper) wrapper.innerHTML = '';
+            });
+
             const state = sortState[type];
             const icon = state.order === 'asc' ? 'arrow-up' : 'arrow-down';
+            
             const activeWrapper = document.querySelector(`.sort-icon-wrapper.${type}[data-col="${state.col}"]`);
             if (activeWrapper) {
                 activeWrapper.innerHTML = `<i data-lucide="${icon}" class="w-3 h-3 text-yellow-600"></i>`;
@@ -924,29 +1052,54 @@
 
         window.handleHeaderSortClick = (column, type) => {
             const state = sortState[type];
-            if (state.col === column) state.order = state.order === 'asc' ? 'desc' : 'asc';
-            else { state.col = column; state.order = 'asc'; }
-            showView(type);
+            
+            if (state.col === column) {
+                state.order = state.order === 'asc' ? 'desc' : 'asc';
+            } else {
+                state.col = column;
+                state.order = 'asc'; 
+            }
+
+            const getSearchTerm = (input) => input ? input.value : '';
+
+            if (type === 'paper') {
+                fetchPapers(getSearchTerm(searchPaperInput));
+            } else if (type === 'materi') {
+                fetchMateri(getSearchTerm(searchMateriInput));
+            } else if (type === 'anggota') { // BARU
+                fetchAnggota(getSearchTerm(searchAnggotaInput));
+            } else if (type === 'alumni') { // BARU
+                fetchAlumni(getSearchTerm(searchAlumniInput));
+            }
             updateTableHeaders(type);
         };
 
-        // --- LOGIN & SESSION ---
+        // --- LOGIKA LOGIN ---
+        function setLogos() {
+            if (loginLogo) loginLogo.src = LOGO_URL;
+            if (headerLogo) headerLogo.src = LOGO_URL; 
+        }
+
         function checkSession() {
-            if (sessionStorage.getItem('isLoggedIn') === 'true') {
+            setLogos();
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
                 showApp();
                 showView(currentActiveView);
-            } else showLogin();
+            } else {
+                showLogin();
+            }
         }
 
         function showLogin() {
-            loginSection.classList.remove('hidden');
-            appSection.classList.add('hidden');
+            if (loginSection) loginSection.classList.remove('flex-grow', 'hidden');
+            if (appSection) appSection.classList.add('hidden');
         }
 
         function showApp() {
-            loginSection.classList.add('hidden');
-            appSection.classList.remove('hidden');
-            applyPermissions();
+            if (loginSection) loginSection.classList.add('hidden');
+            if (appSection) appSection.classList.remove('hidden');
+            applyPermissions(); // TERAPKAN IZIN AKSES SAAT APP DIBUKA
         }
 
         loginForm && loginForm.addEventListener('submit', async (e) => {
@@ -955,255 +1108,780 @@
             const pass = document.getElementById('password').value;
             const submitBtn = loginForm.querySelector('button[type="submit"]');
 
+            const originalText = submitBtn.innerText;
             submitBtn.disabled = true;
             submitBtn.innerText = "Memeriksa...";
-            loginError.classList.add('hidden');
+            if (loginError) loginError.classList.add('hidden');
 
             try {
-                const { data, error } = await supabaseClient.from(USER_TABLE_NAME).select('*').eq('username', user).eq('password', pass).maybeSingle();
+                const { data, error } = await supabaseClient
+                    .from(USER_TABLE_NAME)
+                    .select('*')
+                    .eq('username', user)
+                    .eq('password', pass)
+                    .maybeSingle();
+
                 if (error) throw error;
+
                 if (data) {
                     sessionStorage.setItem('isLoggedIn', 'true');
-                    sessionStorage.setItem('userRole', data.role || 'viewer');
+                    sessionStorage.setItem('userRole', data.role || 'viewer'); // SIMPAN ROLE DI SINI
                     showApp();
                     showView(currentActiveView);
-                } else throw new Error("Username atau Password salah!");
+                } else {
+                    throw new Error("Username atau Password salah!");
+                }
             } catch (err) {
-                loginError.textContent = err.message;
-                loginError.classList.remove('hidden');
+                console.error("Login error:", err);
+                let errorMessage = "Terjadi kesalahan saat login.";
+                if (err.message) {
+                    if (err.message.includes('relation "users" does not exist')) {
+                        errorMessage = "Error: Tabel 'users' belum dibuat di database.";
+                    } else if (err.message.includes('Username atau Password salah')) {
+                        errorMessage = err.message;
+                    } else {
+                        errorMessage = "Terjadi kesalahan koneksi. Periksa konsol untuk detail.";
+                    }
+                }
+                if (loginError) {
+                    loginError.textContent = errorMessage;
+                    loginError.classList.remove('hidden');
+                }
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "Masuk";
+                if (submitBtn) submitBtn.disabled = false;
+                if (submitBtn) submitBtn.innerText = originalText;
             }
         });
 
         logoutButton && logoutButton.addEventListener('click', () => {
-            sessionStorage.clear();
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('userRole');
             window.location.reload(); 
         });
 
-        // --- DATA FETCHING (PAPER) ---
-        async function fetchPapers(searchTerm = '') {
-            papersList.innerHTML = `<tr><td colspan="6" class="p-4 text-center">Memuat...</td></tr>`;
-            const state = sortState.paper;
-            try {
-                let query = supabaseClient.from(TABLE_NAME_PAPER).select('*').order(state.col, { ascending: state.order === 'asc' }); 
-                if (searchTerm) query = query.or(`title.ilike.%${searchTerm}%,authors.ilike.%${searchTerm}%`);
-                const { data, error } = await query;
-                if (error) throw error;
-                papersList.innerHTML = '';
-                if (data.length > 0) {
-                    data.forEach(p => papersList.insertAdjacentHTML('beforeend', createPaperRow(p)));
-                    lucide.createIcons();
-                } else noPaperDataMessage.classList.remove('hidden');
-            } catch (e) { papersList.innerHTML = `<tr><td colspan="6" class="text-red-500">${e.message}</td></tr>`; }
+        // --- LOGIKA UTAMA (PAPER & MATERI) ---
+
+        // Paper
+        function getStatusBadge(status) {
+            let color = '';
+            let icon = '';
+            switch (status) {
+                case 'Draft': color = 'bg-yellow-100 text-yellow-800 border border-yellow-300'; icon = 'pencil'; break;
+                case 'Submitted': color = 'bg-blue-100 text-blue-800 border border-blue-300'; icon = 'send'; break;
+                case 'Under Review': color = 'bg-purple-100 text-purple-800 border border-purple-300'; icon = 'search'; break;
+                case 'Accepted': color = 'bg-green-100 text-green-800 border border-green-300'; icon = 'check-circle'; break;
+                case 'Rejected': color = 'bg-red-100 text-red-800 border border-red-300'; icon = 'x-circle'; break;
+                default: color = 'bg-gray-100 text-gray-800 border border-gray-300'; icon = 'file';
+            }
+            return `<span class="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full items-center space-x-1 ${color}"><i data-lucide="${icon}" class="w-3 h-3"></i><span>${status}</span></span>`;
         }
 
         function createPaperRow(paper) {
-            const role = sessionStorage.getItem('userRole');
-            const deadline = paper.deadline ? new Date(paper.deadline).toLocaleDateString('id-ID') : '-';
-            const statusBadge = getStatusBadge(paper.status);
+            const deadlineDate = paper.deadline ? new Date(paper.deadline).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }) : '-';
             const paperJson = JSON.stringify(paper).replace(/'/g, "\\'");
-            
+            const role = sessionStorage.getItem('userRole');
+
+            const linkIcon = (url, iconName, label) => {
+                if (!url) return '';
+                const safeUrl = url.startsWith('http') || url.startsWith('https') ? url : `https://${url}`;
+                return `
+                    <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" 
+                        class="p-1 rounded-full border border-yellow-200 bg-yellow-50 text-yellow-600 hover:bg-yellow-200 hover:border-yellow-400 transition duration-200 shadow-sm" 
+                        title="${label}">
+                        <i data-lucide="${iconName}" class="w-4 h-4"></i>
+                    </a>
+                `;
+            };
+
             const links = `
-                ${paper.reference_link ? `<a href="${paper.reference_link}" target="_blank" class="p-1 text-yellow-600"><i data-lucide="link" class="w-4 h-4"></i></a>` : ''}
-                ${paper.overleaf_link ? `<a href="${paper.overleaf_link}" target="_blank" class="p-1 text-yellow-600"><i data-lucide="file-text" class="w-4 h-4"></i></a>` : ''}
+                ${linkIcon(paper.reference_link, 'link', 'Link Referensi')}
+                ${linkIcon(paper.overleaf_link, 'file-text', 'Link Overleaf')}
+                ${linkIcon(paper.ppt_link, 'monitor', 'Link PPT')}
             `;
-            const editBtn = role === 'admin' ? `<button onclick='openEditModal("paper", ${paperJson})' class="p-1 text-blue-600"><i data-lucide="edit-3" class="w-4 h-4"></i></button>` : '';
 
-            return `<tr class="hover:bg-yellow-50">
-                <td class="px-3 py-4 font-medium text-gray-900">${paper.title}</td>
-                <td class="px-3 py-4 text-gray-500">${paper.authors || '-'}</td>
-                <td class="px-3 py-4">${statusBadge}</td>
-                <td class="px-3 py-4 hidden sm:table-cell">${paper.category || '-'}</td>
-                <td class="px-3 py-4 hidden sm:table-cell">${deadline}</td>
-                <td class="px-3 py-4 flex space-x-1">${links} ${editBtn}</td>
-            </tr>`;
+            const editButton = (role === 'admin') ? `
+                <button onclick='openEditModal("paper", ${paperJson})'
+                    class="p-1 rounded-full border border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-200 hover:border-blue-400 transition duration-200 shadow-sm" 
+                    title="Edit Paper">
+                    <i data-lucide="edit-3" class="w-4 h-4"></i>
+                </button>
+            ` : '';
+
+            return `
+                <tr class="hover:bg-yellow-50 transition duration-150">
+                    <td class="px-3 py-4 whitespace-normal text-sm font-medium text-gray-900">${paper.title}</td>
+                    <td class="px-3 py-4 whitespace-normal text-sm text-gray-500">${paper.authors || '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm">${getStatusBadge(paper.status)}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">${paper.category || '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">${deadlineDate}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-700 flex space-x-1 items-center">
+                        ${links}
+                        ${editButton}
+                    </td>
+                </tr>
+            `;
         }
+        async function fetchPapers(searchTerm = '') {
+            if (!papersList || !noPaperDataMessage) return;
+            noPaperDataMessage.classList.add('hidden');
+            const state = sortState.paper;
+            papersList.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-500 flex items-center justify-center"><i data-lucide="loader-circle" class="w-5 h-5 mr-2 animate-spin-fast"></i>Memuat data paper...</td></tr>`;
+            lucide.createIcons();
+            updateTableHeaders('paper');
 
-        // --- MATERI FETCHING ---
-        async function fetchMateri(searchTerm = '') {
-            materiList.innerHTML = `<tr><td colspan="5" class="p-4 text-center">Memuat...</td></tr>`;
             try {
-                let query = supabaseClient.from(TABLE_NAME_MATERI).select('*').order(sortState.materi.col, { ascending: sortState.materi.order === 'asc' });
-                if (searchTerm) query = query.or(`judul_materi.ilike.%${searchTerm}%,pembuat.ilike.%${searchTerm}%`);
+                let query = supabaseClient.from(TABLE_NAME_PAPER).select('*').order(state.col, { ascending: state.order === 'asc' }); 
+                if (searchTerm) {
+                    const searchPattern = `%${searchTerm.toLowerCase()}%`;
+                    query = query.or(`title.ilike.${searchPattern},authors.ilike.${searchPattern}`);
+                }
                 const { data, error } = await query;
-                if (error) throw error;
-                materiList.innerHTML = '';
-                data.forEach(m => materiList.insertAdjacentHTML('beforeend', createMateriRow(m)));
-                lucide.createIcons();
-            } catch (e) { materiList.innerHTML = `<tr><td colspan="5">${e.message}</td></tr>`; }
-        }
+                if (error) { throw error; }
 
-        function createMateriRow(materi) {
-            const role = sessionStorage.getItem('userRole');
-            const materiJson = JSON.stringify(materi).replace(/'/g, "\\'");
-            return `<tr class="hover:bg-yellow-50">
-                <td class="px-3 py-4">${materi.judul_materi}</td>
-                <td class="px-3 py-4"><span class="px-2 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs">${materi.divisi}</span></td>
-                <td class="px-3 py-4 hidden sm:table-cell">${materi.pembuat || '-'}</td>
-                <td class="px-3 py-4 hidden sm:table-cell">${materi.tanggal_jadi || '-'}</td>
-                <td class="px-3 py-4 flex">
-                    <a href="${materi.link_materi}" target="_blank" class="p-1 text-yellow-600"><i data-lucide="link" class="w-4 h-4"></i></a>
-                    ${role === 'admin' ? `<button onclick='openEditModal("materi", ${materiJson})' class="p-1 text-blue-600"><i data-lucide="edit-3" class="w-4 h-4"></i></button>` : ''}
-                </td>
-            </tr>`;
+                papersList.innerHTML = '';
+                if (data && data.length > 0) {
+                    data.forEach(paper => { papersList.insertAdjacentHTML('beforeend', createPaperRow(paper)); });
+                    lucide.createIcons(); 
+                } else {
+                    noPaperDataMessage.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Final fetching paper error:', error.message);
+                let errorMessage = error.message.includes('permission denied') ? `Akses Ditolak (RLS Error). Cek RLS tabel '${TABLE_NAME_PAPER}'.` : `Gagal memuat data: ${error.message}`;
+                papersList.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-red-500 font-bold">${errorMessage}</td></tr>`;
+            }
         }
+        paperForm && paperForm.addEventListener('submit', async (event) => { 
+            event.preventDefault();
+            const newPaper = {
+                title: document.getElementById('title').value.trim(),
+                authors: document.getElementById('authors').value.trim() || null,
+                status: document.getElementById('status').value,
+                category: document.getElementById('category').value.trim() || null,
+                deadline: document.getElementById('deadline').value || null,
+                reference_link: document.getElementById('reference_link').value.trim() || null,
+                overleaf_link: document.getElementById('overleaf_link').value.trim() || null,
+                ppt_link: document.getElementById('ppt_link').value.trim() || null,
+            };
 
-        // --- ANGGOTA & ALUMNI FETCHING ---
-        async function fetchAnggota(searchTerm = '') {
-            anggotaList.innerHTML = `<tr><td colspan="11" class="p-4 text-center">Memuat...</td></tr>`;
+            if (!newPaper.title || !newPaper.status) {
+                showMessage(formPaperMessage, 'Judul dan Status wajib diisi!', 'text-red-500');
+                return;
+            }
+
+            if (submitPaperButton) submitPaperButton.disabled = true;
+            if (submitPaperButton) submitPaperButton.innerHTML = renderButtonContent('Menyimpan...', 'loader-circle');
+            lucide.createIcons();
+
             try {
-                let q = supabaseClient.from(TABLE_NAME_ANGGOTA).select('*').order(sortState.anggota.col, { ascending: sortState.anggota.order === 'asc' });
-                if (searchTerm) q = q.or(`nama.ilike.%${searchTerm}%,jabatan.ilike.%${searchTerm}%`);
-                const { data, error } = await q;
+                const { error } = await supabaseClient.from(TABLE_NAME_PAPER).insert([newPaper]);
                 if (error) throw error;
-                anggotaList.innerHTML = '';
-                data.forEach(a => anggotaList.insertAdjacentHTML('beforeend', createAnggotaRow(a)));
+                paperForm.reset();
+                showMessage(formPaperMessage, 'Paper berhasil ditambahkan!', 'text-green-500');
+                fetchPapers(searchPaperInput ? searchPaperInput.value : '');
+            } catch (error) {
+                console.error('Error adding paper:', error.message);
+                let errorMessage = error.message.includes('permission denied') ? `Gagal menambahkan paper: Akses Ditolak (RLS Error).` : `Gagal menambahkan paper: ${error.message}`;
+                showMessage(formPaperMessage, errorMessage, 'text-red-500');
+            } finally {
+                if (submitPaperButton) submitPaperButton.disabled = false;
+                if (submitPaperButton) submitPaperButton.innerHTML = renderButtonContent('Tambah Paper', 'file-plus');
                 lucide.createIcons();
-            } catch (e) { anggotaList.innerHTML = `<tr><td colspan="11">${e.message}</td></tr>`; }
+            }
+        });
+        editPaperForm && editPaperForm.addEventListener('submit', async (e) => { 
+             e.preventDefault();
+            const paperId = document.getElementById('edit-id-paper').value;
+            const updatedPaper = {
+                authors: document.getElementById('edit-authors-paper').value.trim() || null,
+                status: document.getElementById('edit-status-paper').value,
+                category: document.getElementById('edit-category-paper').value.trim() || null,
+                deadline: document.getElementById('edit-deadline-paper').value || null,
+                reference_link: document.getElementById('edit-reference_link-paper').value.trim() || null,
+                overleaf_link: document.getElementById('edit-overleaf_link-paper').value.trim() || null,
+                ppt_link: document.getElementById('edit-ppt_link-paper').value.trim() || null,
+            };
+
+            if (saveEditPaperButton) saveEditPaperButton.disabled = true;
+            if (saveEditPaperButton) saveEditPaperButton.innerHTML = renderButtonContent('Menyimpan...', 'loader-circle');
+            lucide.createIcons();
+
+            try {
+                const { error } = await supabaseClient.from(TABLE_NAME_PAPER).update(updatedPaper).eq('id', paperId);
+                if (error) throw error;
+                showMessage(editFormPaperMessage, 'Perubahan berhasil disimpan!', 'text-green-500');
+                fetchPapers(searchPaperInput ? searchPaperInput.value : '');
+                setTimeout(closeEditModal.bind(null, 'paper'), 1000);
+            } catch (error) {
+                console.error('Error updating paper:', error.message);
+                let errorMessage = error.message.includes('permission denied') ? `Gagal menyimpan: Akses Ditolak (RLS Error).` : `Gagal menyimpan: ${error.message}`;
+                showMessage(editFormPaperMessage, errorMessage, 'text-red-500');
+            } finally {
+                if (saveEditPaperButton) saveEditPaperButton.disabled = false;
+                if (saveEditPaperButton) saveEditPaperButton.innerHTML = renderButtonContent('Simpan Perubahan', 'check');
+                lucide.createIcons();
+            }
+        });
+
+        // Materi
+        function createMateriRow(materi) {
+            const tanggalJadi = materi.tanggal_jadi ? new Date(materi.tanggal_jadi).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }) : '-';
+            const materiJson = JSON.stringify(materi).replace(/'/g, "\\'");
+            const role = sessionStorage.getItem('userRole');
+
+            const badgeColor = materi.divisi === '5G' ? 'bg-indigo-100 text-indigo-800' : 
+                                materi.divisi === 'IoT' ? 'bg-cyan-100 text-cyan-800' : 'bg-gray-100 text-gray-800';
+
+            const linkIcon = (url, iconName, label) => {
+                if (!url) return '';
+                const safeUrl = url.startsWith('http') || url.startsWith('https') ? url : `https://${url}`;
+                return `
+                    <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" 
+                        class="p-1 rounded-full border border-yellow-200 bg-yellow-50 text-yellow-600 hover:bg-yellow-200 hover:border-yellow-400 transition duration-200 shadow-sm" 
+                        title="${label}">
+                        <i data-lucide="${iconName}" class="w-4 h-4"></i>
+                    </a>
+                `;
+            };
+
+            const links = `
+                ${linkIcon(materi.link_materi, 'link', 'Link Materi Utama')}
+                ${linkIcon(materi.ppt_link_materi, 'monitor', 'Link PPT/Slide')}
+            `;
+
+            const editButton = (role === 'admin') ? `
+                <button onclick='openEditModal("materi", ${materiJson})'
+                    class="p-1 rounded-full border border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-200 hover:border-blue-400 transition duration-200 shadow-sm" 
+                    title="Edit Materi">
+                    <i data-lucide="edit-3" class="w-4 h-4"></i>
+                </button>
+            ` : '';
+
+            return `
+                <tr class="hover:bg-yellow-50 transition duration-150">
+                    <td class="px-3 py-4 whitespace-normal text-sm font-medium text-gray-900">${materi.judul_materi}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm">
+                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full ${badgeColor}">
+                            ${materi.divisi}
+                        </span>
+                    </td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">${materi.pembuat || '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">${tanggalJadi}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-700 flex space-x-1 items-center">
+                        ${links}
+                        ${editButton}
+                    </td>
+                </tr>
+            `;
+        }
+        async function fetchMateri(searchTerm = '') {
+            if (!materiList || !noMateriDataMessage) return;
+            noMateriDataMessage.classList.add('hidden');
+            const state = sortState.materi;
+            materiList.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-500 flex items-center justify-center"><i data-lucide="loader-circle" class="w-5 h-5 mr-2 animate-spin-fast"></i>Memuat data materi...</td></tr>`;
+            lucide.createIcons();
+            updateTableHeaders('materi');
+
+            try {
+                let query = supabaseClient.from(TABLE_NAME_MATERI).select('*, ppt_link_materi').order(state.col, { ascending: state.order === 'asc' });
+                if (searchTerm) {
+                    const searchPattern = `%${searchTerm.toLowerCase()}%`;
+                    query = query.or(`judul_materi.ilike.${searchPattern},pembuat.ilike.${searchPattern}`);
+                }
+                const { data, error } = await query;
+                if (error) { throw error; }
+
+                materiList.innerHTML = '';
+                if (data && data.length > 0) {
+                    data.forEach(materi => { materiList.insertAdjacentHTML('beforeend', createMateriRow(materi)); });
+                    lucide.createIcons();
+                } else {
+                    noMateriDataMessage.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Final fetching materi error:', error.message);
+                let errorMessage = error.message.includes('relation "materi" does not exist') ? `Error: Tabel 'materi' belum dibuat di database. Silakan buat tabel materi (Lihat file SQL).` : (error.message.includes('permission denied') ? `Akses Ditolak (RLS Error). Cek RLS tabel '${TABLE_NAME_MATERI}'.` : `Gagal memuat data: ${error.message}`);
+                materiList.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-500 font-bold">${errorMessage}</td></tr>`;
+            }
+        }
+        materiForm && materiForm.addEventListener('submit', async (event) => { 
+             event.preventDefault();
+            const newMateri = {
+                divisi: document.getElementById('divisi').value,
+                judul_materi: document.getElementById('judul_materi').value.trim(),
+                pembuat: document.getElementById('pembuat').value.trim() || null,
+                tanggal_jadi: document.getElementById('tanggal_jadi').value || null,
+                link_materi: document.getElementById('link_materi').value.trim(),
+                ppt_link_materi: document.getElementById('ppt_link_materi').value.trim() || null,
+            };
+
+            if (!newMateri.divisi || !newMateri.judul_materi || !newMateri.link_materi) {
+                showMessage(formMateriMessage, 'Divisi, Judul, dan Link Materi Utama wajib diisi!', 'text-red-500');
+                return;
+            }
+            
+            if (submitMateriButton) submitMateriButton.disabled = true;
+            if (submitMateriButton) submitMateriButton.innerHTML = renderButtonContent('Menyimpan...', 'loader-circle');
+            lucide.createIcons();
+
+            try {
+                const { error } = await supabaseClient.from(TABLE_NAME_MATERI).insert([newMateri]);
+                if (error) throw error;
+                materiForm.reset();
+                showMessage(formMateriMessage, 'Materi berhasil ditambahkan!', 'text-green-500');
+                fetchMateri(searchMateriInput ? searchMateriInput.value : '');
+            } catch (error) {
+                console.error('Error adding materi:', error.message);
+                let errorMessage = error.message.includes('permission denied') ? `Gagal menambahkan materi: Akses Ditolak (RLS Error).` : `Gagal menambahkan materi: ${error.message}`;
+                showMessage(formMateriMessage, errorMessage, 'text-red-500');
+            } finally {
+                if (submitMateriButton) submitMateriButton.disabled = false;
+                if (submitMateriButton) submitMateriButton.innerHTML = renderButtonContent('Tambah Materi', 'folder-plus');
+                lucide.createIcons();
+            }
+        });
+        editMateriForm && editMateriForm.addEventListener('submit', async (e) => { 
+            e.preventDefault();
+            const materiId = document.getElementById('edit-id-materi').value;
+            const updatedMateri = {
+                divisi: document.getElementById('edit-divisi').value,
+                judul_materi: document.getElementById('edit-judul_materi').value.trim(),
+                pembuat: document.getElementById('edit-pembuat').value.trim() || null,
+                tanggal_jadi: document.getElementById('edit-tanggal_jadi').value || null,
+                link_materi: document.getElementById('edit-link_materi').value.trim(),
+                ppt_link_materi: document.getElementById('edit-ppt_link_materi').value.trim() || null,
+            };
+
+            if (!updatedMateri.divisi || !updatedMateri.judul_materi || !updatedMateri.link_materi) {
+                showMessage(editFormMateriMessage, 'Divisi, Judul, dan Link Materi wajib diisi!', 'text-red-500');
+                return;
+            }
+
+            if (saveEditMateriButton) saveEditMateriButton.disabled = true;
+            if (saveEditMateriButton) saveEditMateriButton.innerHTML = renderButtonContent('Menyimpan...', 'loader-circle');
+            lucide.createIcons();
+
+            try {
+                const { error } = await supabaseClient.from(TABLE_NAME_MATERI).update(updatedMateri).eq('id', materiId);
+                if (error) throw error;
+                showMessage(editFormMateriMessage, 'Perubahan berhasil disimpan!', 'text-green-500');
+                fetchMateri(searchMateriInput ? searchMateriInput.value : '');
+                setTimeout(closeEditModal.bind(null, 'materi'), 1000);
+            } catch (error) {
+                console.error('Error updating materi:', error.message);
+                let errorMessage = error.message.includes('permission denied') ? `Gagal menyimpan: Akses Ditolak (RLS Error).` : `Gagal menyimpan: ${error.message}`;
+                showMessage(editFormMateriMessage, errorMessage, 'text-red-500');
+            } finally {
+                if (saveEditMateriButton) saveEditMateriButton.disabled = false;
+                if (saveEditMateriButton) saveEditMateriButton.innerHTML = renderButtonContent('Simpan Perubahan Materi', 'check');
+                lucide.createIcons();
+            }
+        });
+
+        // --- LOGIKA ANGGOTA (BARU) ---
+
+        function createAnggotaRow(anggota) {
+            const anggotaJson = JSON.stringify(anggota).replace(/'/g, "\\'");
+            const tglLahir = anggota.tanggal_lahir ? new Date(anggota.tanggal_lahir).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }) : '-';
+            const orgLain = anggota.organisasi_lain || '-';
+            const role = sessionStorage.getItem('userRole');
+
+            // PERBAIKAN IKON CV
+            const cvLink = anggota.link_cv ? 
+                `<a href="${anggota.link_cv}" target="_blank" class="cv-link-cell cv-available" title="Lihat CV"><i data-lucide="file-text" class="w-4 h-4"></i></a>` :
+                `<span class="cv-link-cell cv-missing" title="CV Tidak Ada"><i data-lucide="file-x" class="w-4 h-4"></i></span>`;
+
+            const editButton = (role === 'admin') ? `
+                <button onclick='openEditModal("anggota", ${anggotaJson})'
+                    class="p-1 rounded-full border border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-200 hover:border-blue-400 transition duration-200 shadow-sm" 
+                    title="Edit Anggota">
+                    <i data-lucide="edit-3" class="w-4 h-4"></i>
+                </button>
+            ` : '';
+
+            // Mengubah tampilan kolom Kontak & CV
+            return `
+                <tr class="hover:bg-yellow-50 transition duration-150">
+                    <td class="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <span class="font-bold">${anggota.nama}</span>
+                    </td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500">${anggota.batch || '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-700">${anggota.jabatan || '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-700">${anggota.divisi || '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500">${anggota.angkatan || '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500">${tglLahir}</td>
+                    <td class="px-3 py-4 whitespace-normal text-xs text-gray-700 truncate max-w-xs">${anggota.email ? `<a href="mailto:${anggota.email}" class="text-blue-600 hover:underline">${anggota.email}</a>` : '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-xs text-gray-700">${anggota.no_handphone || '-'}</td>
+                    <td class="px-3 py-4 whitespace-normal text-xs text-gray-500">${orgLain}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm">${cvLink}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-700">
+                        ${editButton}
+                    </td>
+                </tr>
+            `;
         }
 
-        function createAnggotaRow(a) {
+        async function fetchAnggota(searchTerm = '') {
+            if (!anggotaList || !noAnggotaDataMessage) return;
+            noAnggotaDataMessage.classList.add('hidden');
+            const state = sortState.anggota;
+            anggotaList.innerHTML = `<tr><td colspan="11" class="p-4 text-center text-gray-500 flex items-center justify-center"><i data-lucide="loader-circle" class="w-5 h-5 mr-2 animate-spin-fast"></i>Memuat data anggota...</td></tr>`;
+            lucide.createIcons();
+            updateTableHeaders('anggota');
+
+            try {
+                let query = supabaseClient.from(TABLE_NAME_ANGGOTA).select('*').order(state.col, { ascending: state.order === 'asc' });
+                if (searchTerm) {
+                    const searchPattern = `%${searchTerm.toLowerCase()}%`;
+                    query = query.or(`nama.ilike.${searchPattern},jabatan.ilike.${searchPattern},divisi.ilike.${searchPattern}`);
+                }
+                const { data, error } = await query;
+                if (error) { throw error; }
+
+                anggotaList.innerHTML = '';
+                if (data && data.length > 0) {
+                    data.forEach(anggota => { anggotaList.insertAdjacentHTML('beforeend', createAnggotaRow(anggota)); });
+                    lucide.createIcons();
+                } else {
+                    noAnggotaDataMessage.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Final fetching anggota error:', error.message);
+                let errorMessage = error.message.includes('relation "anggota_hexacomm" does not exist') ? `Error: Tabel 'anggota_hexacomm' belum dibuat di database. Silakan buat tabel (Lihat file SQL).` : (error.message.includes('permission denied') ? `Akses Ditolak (RLS Error). Cek RLS tabel '${TABLE_NAME_ANGGOTA}'.` : `Gagal memuat data: ${error.message}`);
+                anggotaList.innerHTML = `<tr><td colspan="11" class="p-4 text-center text-red-500 font-bold">${errorMessage}</td></tr>`;
+            }
+        }
+
+        anggotaForm && anggotaForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const newAnggota = {
+                nama: document.getElementById('anggota_nama').value.trim(),
+                batch: document.getElementById('anggota_batch').value.trim() || null,
+                jabatan: document.getElementById('anggota_jabatan').value,
+                divisi: document.getElementById('anggota_divisi').value,
+                angkatan: parseInt(document.getElementById('anggota_angkatan').value) || null,
+                email: document.getElementById('anggota_email').value.trim() || null,
+                no_handphone: document.getElementById('anggota_no_handphone').value.trim() || null,
+                tanggal_lahir: document.getElementById('anggota_tanggal_lahir').value || null,
+                organisasi_lain: document.getElementById('anggota_organisasi_lain').value.trim() || null,
+                link_cv: document.getElementById('anggota_link_cv').value.trim() || null,
+            };
+
+            if (!newAnggota.nama || !newAnggota.jabatan || !newAnggota.divisi) {
+                showMessage(formAnggotaMessage, 'Nama, Jabatan, dan Divisi wajib diisi!', 'text-red-500');
+                return;
+            }
+            
+            if (submitAnggotaButton) submitAnggotaButton.disabled = true;
+            if (submitAnggotaButton) submitAnggotaButton.innerHTML = renderButtonContent('Menyimpan...', 'loader-circle');
+            lucide.createIcons();
+
+            try {
+                const { error } = await supabaseClient.from(TABLE_NAME_ANGGOTA).insert([newAnggota]);
+                if (error) throw error;
+                anggotaForm.reset();
+                showMessage(formAnggotaMessage, 'Anggota berhasil ditambahkan!', 'text-green-500');
+                fetchAnggota(searchAnggotaInput ? searchAnggotaInput.value : '');
+            } catch (error) {
+                console.error('Error adding anggota:', error.message);
+                let errorMessage = error.message.includes('permission denied') ? `Gagal menambahkan anggota: Akses Ditolak (RLS Error).` : `Gagal menambahkan anggota: ${error.message}`;
+                showMessage(formAnggotaMessage, errorMessage, 'text-red-500');
+            } finally {
+                if (submitAnggotaButton) submitAnggotaButton.disabled = false;
+                if (submitAnggotaButton) submitAnggotaButton.innerHTML = renderButtonContent('Tambah Anggota', 'user-plus');
+                lucide.createIcons();
+            }
+        });
+
+        editAnggotaForm && editAnggotaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const anggotaId = document.getElementById('edit-id-anggota').value;
+            const updatedAnggota = {
+                nama: document.getElementById('edit-anggota_nama').value.trim(),
+                batch: document.getElementById('edit-anggota_batch').value.trim() || null,
+                jabatan: document.getElementById('edit-anggota_jabatan').value,
+                divisi: document.getElementById('edit-anggota_divisi').value,
+                angkatan: parseInt(document.getElementById('edit-anggota_angkatan').value) || null,
+                email: document.getElementById('edit-anggota_email').value.trim() || null,
+                no_handphone: document.getElementById('edit-anggota_no_handphone').value.trim() || null,
+                tanggal_lahir: document.getElementById('edit-anggota_tanggal_lahir').value || null,
+                organisasi_lain: document.getElementById('edit-anggota_organisasi_lain').value.trim() || null,
+                link_cv: document.getElementById('edit-anggota_link_cv').value.trim() || null,
+            };
+
+            if (saveEditAnggotaButton) saveEditAnggotaButton.disabled = true;
+            if (saveEditAnggotaButton) saveEditAnggotaButton.innerHTML = renderButtonContent('Menyimpan...', 'loader-circle');
+            lucide.createIcons();
+
+            try {
+                const { error } = await supabaseClient.from(TABLE_NAME_ANGGOTA).update(updatedAnggota).eq('id', anggotaId);
+                if (error) throw error;
+                showMessage(editFormAnggotaMessage, 'Perubahan berhasil disimpan!', 'text-green-500');
+                fetchAnggota(searchAnggotaInput ? searchAnggotaInput.value : '');
+                setTimeout(closeEditModal.bind(null, 'anggota'), 1000);
+            } catch (error) {
+                console.error('Error updating anggota:', error.message);
+                let errorMessage = error.message.includes('permission denied') ? `Gagal menyimpan: Akses Ditolak (RLS Error).` : `Gagal menyimpan: ${error.message}`;
+                showMessage(editFormAnggotaMessage, errorMessage, 'text-red-500');
+            } finally {
+                if (saveEditAnggotaButton) saveEditAnggotaButton.disabled = false;
+                if (saveEditAnggotaButton) saveEditAnggotaButton.innerHTML = renderButtonContent('Simpan Perubahan Anggota', 'check');
+                lucide.createIcons();
+            }
+        });
+
+        // --- LOGIKA ALUMNI (BARU) ---
+
+        function createAlumniRow(alumni) {
+            const alumniJson = JSON.stringify(alumni).replace(/'/g, "\\'");
             const role = sessionStorage.getItem('userRole');
-            const dataJson = JSON.stringify(a).replace(/'/g, "\\'");
-            return `<tr class="hover:bg-yellow-50 text-xs">
-                <td class="px-3 py-4 font-bold">${a.nama}</td>
-                <td class="px-3 py-4">${a.batch || '-'}</td>
-                <td class="px-3 py-4">${a.jabatan}</td>
-                <td class="px-3 py-4">${a.divisi}</td>
-                <td class="px-3 py-4">${a.angkatan || '-'}</td>
-                <td class="px-3 py-4">${a.tanggal_lahir || '-'}</td>
-                <td class="px-3 py-4 text-blue-600 truncate max-w-[100px]">${a.email || '-'}</td>
-                <td class="px-3 py-4">${a.no_handphone || '-'}</td>
-                <td class="px-3 py-4">${a.organisasi_lain || '-'}</td>
-                <td class="px-3 py-4 text-center">${a.link_cv ? `<a href="${a.link_cv}" target="_blank" class="text-green-600"><i data-lucide="file-text" class="w-4 h-4"></i></a>` : '-'}</td>
-                <td class="px-3 py-4">${role === 'admin' ? `<button onclick='openEditModal("anggota", ${dataJson})' class="text-blue-600"><i data-lucide="edit-3" class="w-4 h-4"></i></button>` : ''}</td>
-            </tr>`;
+            
+            // PERBAIKAN IKON CV
+            const cvLink = alumni.link_cv ? 
+                `<a href="${alumni.link_cv}" target="_blank" class="cv-link-cell cv-available" title="Lihat CV"><i data-lucide="file-text" class="w-4 h-4"></i></a>` :
+                `<span class="cv-link-cell cv-missing" title="CV Tidak Ada"><i data-lucide="file-x" class="w-4 h-4"></i></span>`;
+
+            const editButton = (role === 'admin') ? `
+                <button onclick='openEditModal("alumni", ${alumniJson})'
+                    class="p-1 rounded-full border border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-200 hover:border-blue-400 transition duration-200 shadow-sm" 
+                    title="Edit Alumni">
+                    <i data-lucide="edit-3" class="w-4 h-4"></i>
+                </button>
+            ` : '';
+
+            // Mengubah tampilan kolom Kontak & CV
+            return `
+                <tr class="hover:bg-yellow-50 transition duration-150">
+                    <td class="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <span class="font-bold">${alumni.nama}</span>
+                    </td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500">${alumni.batch || '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-700">${alumni.angkatan || '-'}</td>
+                    <td class="px-3 py-4 whitespace-normal text-sm text-gray-700">${alumni.bidang || '-'}</td>
+                    <td class="px-3 py-4 whitespace-normal text-sm text-gray-500">${alumni.tempat_kerja || '-'}</td>
+                    <td class="px-3 py-4 whitespace-normal text-xs text-gray-700 truncate max-w-xs">${alumni.email ? `<a href="mailto:${alumni.email}" class="text-blue-600 hover:underline">${alumni.email}</a>` : '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-xs text-gray-700">${alumni.no_handphone || '-'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm">${cvLink}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-700">
+                        ${editButton}
+                    </td>
+                </tr>
+            `;
         }
 
         async function fetchAlumni(searchTerm = '') {
-            alumniList.innerHTML = `<tr><td colspan="9" class="p-4 text-center">Memuat...</td></tr>`;
+            if (!alumniList || !noAlumniDataMessage) return;
+            noAlumniDataMessage.classList.add('hidden');
+            const state = sortState.alumni;
+            alumniList.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-gray-500 flex items-center justify-center"><i data-lucide="loader-circle" class="w-5 h-5 mr-2 animate-spin-fast"></i>Memuat data alumni...</td></tr>`;
+            lucide.createIcons();
+            updateTableHeaders('alumni');
+
             try {
-                let q = supabaseClient.from(TABLE_NAME_ALUMNI).select('*').order(sortState.alumni.col, { ascending: sortState.alumni.order === 'asc' });
-                if (searchTerm) q = q.or(`nama.ilike.%${searchTerm}%,bidang.ilike.%${searchTerm}%`);
-                const { data, error } = await q;
-                if (error) throw error;
+                let query = supabaseClient.from(TABLE_NAME_ALUMNI).select('*').order(state.col, { ascending: state.order === 'asc' });
+                if (searchTerm) {
+                    const searchPattern = `%${searchTerm.toLowerCase()}%`;
+                    query = query.or(`nama.ilike.${searchPattern},tempat_kerja.ilike.${searchPattern},bidang.ilike.${searchPattern}`);
+                }
+                const { data, error } = await query;
+                if (error) { throw error; }
+
                 alumniList.innerHTML = '';
-                data.forEach(a => alumniList.insertAdjacentHTML('beforeend', createAlumniRow(a)));
+                if (data && data.length > 0) {
+                    data.forEach(alumni => { alumniList.insertAdjacentHTML('beforeend', createAlumniRow(alumni)); });
+                    lucide.createIcons();
+                } else {
+                    noAlumniDataMessage.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Final fetching alumni error:', error.message);
+                let errorMessage = error.message.includes('relation "alumni" does not exist') ? `Error: Tabel 'alumni' belum dibuat di database. Silakan buat tabel (Lihat file SQL).` : (error.message.includes('permission denied') ? `Akses Ditolak (RLS Error). Cek RLS tabel '${TABLE_NAME_ALUMNI}'.` : `Gagal memuat data: ${error.message}`);
+                alumniList.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-red-500 font-bold">${errorMessage}</td></tr>`;
+            }
+        }
+
+        alumniForm && alumniForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const newAlumni = {
+                nama: document.getElementById('alumni_nama').value.trim(),
+                batch: document.getElementById('alumni_batch').value.trim() || null,
+                angkatan: parseInt(document.getElementById('alumni_angkatan').value) || null,
+                bidang: document.getElementById('alumni_bidang').value.trim() || null,
+                tempat_kerja: document.getElementById('alumni_tempat_kerja').value.trim() || null,
+                no_handphone: document.getElementById('alumni_no_handphone').value.trim() || null,
+                email: document.getElementById('alumni_email').value.trim() || null,
+                link_cv: document.getElementById('alumni_link_cv').value.trim() || null,
+            };
+
+            if (!newAlumni.nama) {
+                showMessage(formAlumniMessage, 'Nama wajib diisi!', 'text-red-500');
+                return;
+            }
+            
+            if (submitAlumniButton) submitAlumniButton.disabled = true;
+            if (submitAlumniButton) submitAlumniButton.innerHTML = renderButtonContent('Menyimpan...', 'loader-circle');
+            lucide.createIcons();
+
+            try {
+                const { error } = await supabaseClient.from(TABLE_NAME_ALUMNI).insert([newAlumni]);
+                if (error) throw error;
+                alumniForm.reset();
+                showMessage(formAlumniMessage, 'Data alumni berhasil ditambahkan!', 'text-green-500');
+                fetchAlumni(searchAlumniInput ? searchAlumniInput.value : '');
+            } catch (error) {
+                console.error('Error adding alumni:', error.message);
+                let errorMessage = error.message.includes('permission denied') ? `Gagal menambahkan alumni: Akses Ditolak (RLS Error).` : `Gagal menambahkan alumni: ${error.message}`;
+                showMessage(formAlumniMessage, errorMessage, 'text-red-500');
+            } finally {
+                if (submitAlumniButton) submitAlumniButton.disabled = false;
+                if (submitAlumniButton) submitAlumniButton.innerHTML = renderButtonContent('Tambah Alumni', 'briefcase-business');
                 lucide.createIcons();
-            } catch (e) { alumniList.innerHTML = `<tr><td colspan="9">${e.message}</td></tr>`; }
-        }
+            }
+        });
 
-        function createAlumniRow(a) {
-            const role = sessionStorage.getItem('userRole');
-            const dataJson = JSON.stringify(a).replace(/'/g, "\\'");
-            return `<tr class="hover:bg-yellow-50 text-xs">
-                <td class="px-3 py-4 font-bold">${a.nama}</td>
-                <td class="px-3 py-4">${a.batch || '-'}</td>
-                <td class="px-3 py-4">${a.angkatan || '-'}</td>
-                <td class="px-3 py-4">${a.bidang || '-'}</td>
-                <td class="px-3 py-4">${a.tempat_kerja || '-'}</td>
-                <td class="px-3 py-4">${a.email || '-'}</td>
-                <td class="px-3 py-4">${a.no_handphone || '-'}</td>
-                <td class="px-3 py-4 text-center">${a.link_cv ? `<a href="${a.link_cv}" target="_blank" class="text-green-600"><i data-lucide="file-text" class="w-4 h-4"></i></a>` : '-'}</td>
-                <td class="px-3 py-4">${role === 'admin' ? `<button onclick='openEditModal("alumni", ${dataJson})' class="text-blue-600"><i data-lucide="edit-3" class="w-4 h-4"></i></button>` : ''}</td>
-            </tr>`;
-        }
-
-        // --- SUBMIT FORMS ---
-        paperForm.onsubmit = async (e) => {
+        editAlumniForm && editAlumniForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const payload = {
-                title: document.getElementById('title').value,
-                authors: document.getElementById('authors').value,
-                status: document.getElementById('status').value,
-                category: document.getElementById('category').value,
-                deadline: document.getElementById('deadline').value || null
+            const alumniId = document.getElementById('edit-id-alumni').value;
+            const updatedAlumni = {
+                nama: document.getElementById('edit-alumni_nama').value.trim(),
+                batch: document.getElementById('edit-alumni_batch').value.trim() || null,
+                angkatan: parseInt(document.getElementById('edit-alumni_angkatan').value) || null,
+                bidang: document.getElementById('edit-alumni_bidang').value.trim() || null,
+                tempat_kerja: document.getElementById('edit-alumni_tempat_kerja').value.trim() || null,
+                no_handphone: document.getElementById('edit-alumni_no_handphone').value.trim() || null,
+                email: document.getElementById('edit-alumni_email').value.trim() || null,
+                link_cv: document.getElementById('edit-alumni_link_cv').value.trim() || null,
             };
-            submitPaperButton.disabled = true;
-            const { error } = await supabaseClient.from(TABLE_NAME_PAPER).insert([payload]);
-            if (!error) { paperForm.reset(); fetchPapers(); }
-            submitPaperButton.disabled = false;
-        };
 
-        materiForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const payload = {
-                divisi: document.getElementById('divisi').value,
-                judul_materi: document.getElementById('judul_materi').value,
-                link_materi: document.getElementById('link_materi').value
-            };
-            const { error } = await supabaseClient.from(TABLE_NAME_MATERI).insert([payload]);
-            if (!error) { materiForm.reset(); fetchMateri(); }
-        };
+            if (saveEditAlumniButton) saveEditAlumniButton.disabled = true;
+            if (saveEditAlumniButton) saveEditAlumniButton.innerHTML = renderButtonContent('Menyimpan...', 'loader-circle');
+            lucide.createIcons();
 
-        anggotaForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const payload = {
-                nama: document.getElementById('anggota_nama').value,
-                jabatan: document.getElementById('anggota_jabatan').value,
-                divisi: document.getElementById('anggota_divisi').value,
-                email: document.getElementById('anggota_email').value
-            };
-            const { error } = await supabaseClient.from(TABLE_NAME_ANGGOTA).insert([payload]);
-            if (!error) { anggotaForm.reset(); fetchAnggota(); }
-        };
+            try {
+                const { error } = await supabaseClient.from(TABLE_NAME_ALUMNI).update(updatedAlumni).eq('id', alumniId);
+                if (error) throw error;
+                showMessage(editFormAlumniMessage, 'Perubahan berhasil disimpan!', 'text-green-500');
+                fetchAlumni(searchAlumniInput ? searchAlumniInput.value : '');
+                setTimeout(closeEditModal.bind(null, 'alumni'), 1000);
+            } catch (error) {
+                console.error('Error updating alumni:', error.message);
+                let errorMessage = error.message.includes('permission denied') ? `Gagal menyimpan: Akses Ditolak (RLS Error).` : `Gagal menyimpan: ${error.message}`;
+                showMessage(editFormAlumniMessage, errorMessage, 'text-red-500');
+            } finally {
+                if (saveEditAlumniButton) saveEditAlumniButton.disabled = false;
+                if (saveEditAlumniButton) saveEditAlumniButton.innerHTML = renderButtonContent('Simpan Perubahan Alumni', 'check');
+                lucide.createIcons();
+            }
+        });
 
-        alumniForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const payload = { nama: document.getElementById('alumni_nama').value, angkatan: document.getElementById('alumni_angkatan').value };
-            const { error } = await supabaseClient.from(TABLE_NAME_ALUMNI).insert([payload]);
-            if (!error) { alumniForm.reset(); fetchAlumni(); }
-        };
 
-        // --- EDIT MODAL LOGIC ---
+        // --- LOGIKA MODAL UTAMA ---
+
         window.openEditModal = (type, data) => {
             if (type === 'paper') {
                 document.getElementById('edit-id-paper').value = data.id;
                 document.getElementById('edit-title-display-paper').textContent = data.title;
+                document.getElementById('edit-authors-paper').value = data.authors || '';
                 document.getElementById('edit-status-paper').value = data.status;
-                editModal.classList.remove('hidden');
+                document.getElementById('edit-category-paper').value = data.category || '';
+                document.getElementById('edit-deadline-paper').value = data.deadline ? data.deadline.split('T')[0] : '';
+                document.getElementById('edit-reference_link-paper').value = data.reference_link || '';
+                document.getElementById('edit-overleaf_link-paper').value = data.overleaf_link || '';
+                document.getElementById('edit-ppt_link-paper').value = data.ppt_link || '';
+
+                if (editFormPaperMessage) editFormPaperMessage.classList.add('hidden');
+                if (editModal) editModal.classList.remove('hidden');
             } else if (type === 'materi') {
                 document.getElementById('edit-id-materi').value = data.id;
                 document.getElementById('edit-judul_materi').value = data.judul_materi;
-                editMateriModal.classList.remove('hidden');
-            } else if (type === 'anggota') {
+                document.getElementById('edit-divisi').value = data.divisi;
+                document.getElementById('edit-pembuat').value = data.pembuat || '';
+                document.getElementById('edit-tanggal_jadi').value = data.tanggal_jadi ? data.tanggal_jadi.split('T')[0] : '';
+                document.getElementById('edit-link_materi').value = data.link_materi || '';
+                document.getElementById('edit-ppt_link_materi').value = data.ppt_link_materi || '';
+                
+                if (editFormMateriMessage) editFormMateriMessage.classList.add('hidden');
+                if (editMateriModal) editMateriModal.classList.remove('hidden');
+            } else if (type === 'anggota') { // BARU
                 document.getElementById('edit-id-anggota').value = data.id;
                 document.getElementById('edit-anggota_nama').value = data.nama;
+                document.getElementById('edit-anggota_batch').value = data.batch || '';
+                document.getElementById('edit-anggota_angkatan').value = data.angkatan || '';
+                document.getElementById('edit-anggota_email').value = data.email || '';
+                document.getElementById('edit-anggota_no_handphone').value = data.no_handphone || '';
+                document.getElementById('edit-anggota_tanggal_lahir').value = data.tanggal_lahir ? data.tanggal_lahir.split('T')[0] : '';
+                document.getElementById('edit-anggota_organisasi_lain').value = data.organisasi_lain || '';
+                document.getElementById('edit-anggota_link_cv').value = data.link_cv || '';
+
                 populateSelect(document.getElementById('edit-anggota_jabatan'), JABATAN_OPTIONS, data.jabatan);
                 populateSelect(document.getElementById('edit-anggota_divisi'), DIVISI_OPTIONS, data.divisi);
-                editAnggotaModal.classList.remove('hidden');
-            } else if (type === 'alumni') {
+
+                if (editFormAnggotaMessage) editFormAnggotaMessage.classList.add('hidden');
+                if (editAnggotaModal) editAnggotaModal.classList.remove('hidden');
+            } else if (type === 'alumni') { // BARU
                 document.getElementById('edit-id-alumni').value = data.id;
                 document.getElementById('edit-alumni_nama').value = data.nama;
-                editAlumniModal.classList.remove('hidden');
+                document.getElementById('edit-alumni_batch').value = data.batch || '';
+                document.getElementById('edit-alumni_angkatan').value = data.angkatan || '';
+                document.getElementById('edit-alumni_bidang').value = data.bidang || '';
+                document.getElementById('edit-alumni_tempat_kerja').value = data.tempat_kerja || '';
+                document.getElementById('edit-alumni_no_handphone').value = data.no_handphone || '';
+                document.getElementById('edit-alumni_email').value = data.email || '';
+                document.getElementById('edit-alumni_link_cv').value = data.link_cv || '';
+                
+                if (editFormAlumniMessage) editFormAlumniMessage.classList.add('hidden');
+                if (editAlumniModal) editAlumniModal.classList.remove('hidden');
             }
             lucide.createIcons();
-        };
-
-        window.closeEditModal = (type) => {
-            if (type === 'paper') editModal.classList.add('hidden');
-            if (type === 'materi') editMateriModal.classList.add('hidden');
-            if (type === 'anggota') editAnggotaModal.classList.add('hidden');
-            if (type === 'alumni') editAlumniModal.classList.add('hidden');
-        };
-
-        function getStatusBadge(status) {
-            let color = status === 'Accepted' ? 'bg-green-100 text-green-800' : status === 'Rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800';
-            return `<span class="px-2 py-1 rounded-full text-xs font-bold ${color}">${status}</span>`;
         }
 
-        // --- INIT ---
-        document.addEventListener('DOMContentLoaded', () => {
-            submitPaperButton.innerHTML = renderButtonContent('Tambah Paper');
-            submitMateriButton.innerHTML = renderButtonContent('Tambah Materi', 'folder-plus');
-            submitAnggotaButton.innerHTML = renderButtonContent('Tambah Anggota', 'user-plus');
-            submitAlumniButton.innerHTML = renderButtonContent('Tambah Alumni', 'briefcase-business');
+        window.closeEditModal = (type) => {
+            if (type === 'paper' && editModal) editModal.classList.add('hidden');
+            if (type === 'materi' && editMateriModal) editMateriModal.classList.add('hidden');
+            if (type === 'anggota' && editAnggotaModal) editAnggotaModal.classList.add('hidden');
+            if (type === 'alumni' && editAlumniModal) editAlumniModal.classList.add('hidden');
+        }
 
+
+        // --- UTILITY PESAN & EVENT LISTENER PENCARIAN ---
+
+        let searchTimeout;
+        const setupSearchListeners = () => {
+            searchPaperInput && searchPaperInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => { fetchPapers(searchPaperInput.value); }, 300);
+            });
+
+            searchMateriInput && searchMateriInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => { fetchMateri(searchMateriInput.value); }, 300);
+            });
+
+            searchAnggotaInput && searchAnggotaInput.addEventListener('input', () => { // BARU
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => { fetchAnggota(searchAnggotaInput.value); }, 300);
+            });
+
+            searchAlumniInput && searchAlumniInput.addEventListener('input', () => { // BARU
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => { fetchAlumni(searchAlumniInput.value); }, 300);
+            });
+        };
+        
+        // --- INISIALISASI ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup Forms
+            if (submitPaperButton) submitPaperButton.innerHTML = renderButtonContent('Tambah Paper', 'file-plus');
+            if (submitMateriButton) submitMateriButton.innerHTML = renderButtonContent('Tambah Materi', 'folder-plus');
+            if (submitAnggotaButton) submitAnggotaButton.innerHTML = renderButtonContent('Tambah Anggota', 'user-plus'); // BARU
+            if (submitAlumniButton) submitAlumniButton.innerHTML = renderButtonContent('Tambah Alumni', 'briefcase-business'); // BARU
+
+            // Populate Dropdowns
             populateSelect(document.getElementById('anggota_jabatan'), JABATAN_OPTIONS);
             populateSelect(document.getElementById('anggota_divisi'), DIVISI_OPTIONS);
 
+            setupSearchListeners();
             checkSession();
             lucide.createIcons();
         });
